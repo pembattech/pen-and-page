@@ -1,0 +1,20 @@
+from django.db import models
+from django.contrib.auth.models import User
+
+from .utils import generate_slug
+
+# Create your models here.
+class Blog(models.Model):
+    title = models.CharField(max_length=1000)  # A field to store the title of the blog post.
+    content = models.TextField()  # A field to store the main content of the blog post.
+    slug = models.SlugField(max_length=1000, null=True, blank=True)  # A field to store a URL-friendly version of the title.
+    image = models.ImageField(upload_to="blog")  # A field to store the image associated with the blog post.
+    created_at = models.DateTimeField(auto_now_add=True)  # A field to store the timestamp when the blog post was created.
+    upload_to = models.DateField(auto_now=True)  # A field to store the timestamp when the blog post was last updated.
+
+    def __str__(self) -> str:
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        self.slug = generate_slug(self.title)
+        super(Blog, self).save(*args, **kwargs)
