@@ -1,0 +1,106 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/login.css' %} ">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/style.css' %} ">
+    <script src = "{% static 'js/style.js'%}"> </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <input type = "hidden" id = "csrf" value = "{{csrf_token}}">
+    <div class="container">
+      <div class="grid-container">
+        <div class="navbar left-grid">
+          <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'addblog' %}">Add Blog</a></li>
+                <li class="logout-button"><a href="{% url 'logout' %}">Logout</a></li>
+              {% else %}
+                <li><a href="{% url 'login' %}">Add Blog</a></li>
+                <li><a href="{% url 'login' %}">Sign in</a></li>
+                <li><a href="{% url 'register' %}">Get Started</a></li>
+                
+            {% endif %}
+
+          </ul>
+
+          <div class="logo">
+            <img src="{% static 'image/PenandPage_logo.png' %}" alt="Logo" />
+          </div>
+
+          <div class="subs-for-news-letter">
+            <p>Subsribe for news letter</p>
+            <div class="input-container left-grid-input">
+              <input type="text" placeholder="Enter Email Address" />
+              <img src="{% static 'image/ok_button.png' %}" alt="OK" class="ok-button" />
+            </div>
+          </div>
+
+          <footer class="left-grid-footer" id="footer"></footer>
+        </div>
+
+        <div class="mid-grid">
+          <div class="articles">
+            {% block content %}
+            {% endblock %}
+          </div>
+        </div>
+
+        <div class="right-grid">
+          <div class="input-container right-grid-input">
+            <input type="text" placeholder="Type a keyword" />
+            <img src="{% static 'image/ok_button.png' %}" alt="OK" class="ok-button" />
+          </div>
+
+          <div class="categories-content">
+            <div class="cat-list">
+              <ul>
+                <li class="title">Categories</li>
+                <li class="cat-item"><a href="#home">Fashion</a></li>
+                <li class="cat-item"><a href="#contact">photograph</a></li>
+                <li class="cat-item"><a href="#signin">Technology</a></li>
+                <li class="cat-item"><a href="#getstarted">Food</a></li>
+              </ul>
+            </div>
+
+            <div class="popular-article">
+              <div class="title">
+                <p>Popular Article</p>
+              </div>
+
+              <div class="article-list">
+                <ul>
+                  <li><a href="#blog">Hello! This is a test blog</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // copywrite with auto increase year
+      // start
+      document.addEventListener("DOMContentLoaded", function () {
+        var currentYear = new Date().getFullYear();
+        var footerText =
+          "Copyright &copy; " + currentYear + " All rights reserved";
+        document.getElementById("footer").innerHTML = footerText;
+      });
+      // end
+    </script>
+  </body>
+</html>

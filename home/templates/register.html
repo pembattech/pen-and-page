@@ -1,0 +1,32 @@
+<!-- signup.html -->
+{% extends 'base.html' %} {% block content %}
+<h2 class="forms_title">Sign Up</h2>
+<form class="forms_form" method="post">
+  {% csrf_token %}
+  <fieldset class="forms_fieldset">
+    <div class="forms_field">
+      <input
+        type="username"
+        name="username"
+        id="username"
+        placeholder="Email"
+        class="forms_field-input"
+        required
+      />
+    </div>
+    <div class="forms_field">
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        class="forms_field-input"
+        required
+      />
+    </div>
+  </fieldset>
+  <div class="forms_buttons">
+    <input type="submit" value="Sign up" onclick="return register()" class="forms_buttons-action" />
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="right-grid">
+    <div class="input-container right-grid-input">
+    <input type="text" placeholder="Type a keyword" />
+    <img src="{% static 'image/ok_button.png' %}" alt="OK" class="ok-button" />
+</div>
+
+<div class="categories-content">
+    <div class="cat-list">
+        <ul>
+            <li class="title">Categories</li>
+            <li class="cat-item"><a href="#home">Fashion</a></li>
+            <li class="cat-item"><a href="#contact">photograph</a></li>
+            <li class="cat-item"><a href="#signin">Technology</a></li>
+            <li class="cat-item"><a href="#getstarted">Food</a></li>
+        </ul>
+    </div>
+
+    <div class="popular-article">
+        <div class="title">
+            <p>Popular Article</p>
+      </div>
+
+      <div class="article-list">
+        <ul>
+          <li><a href="#blog">Hello! This is a test blog</a></li>
+        </ul>
+      </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
