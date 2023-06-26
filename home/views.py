@@ -23,3 +23,12 @@ def logout_view(request):
     logout(request)
     return redirect("/")
 
+def blog_detail(request, slug):
+    context = {}
+    try:
+        blog_obj = Blog.objects.filter(slug=slug).first()
+        context['blog_obj'] = blog_obj
+    except Exception as e:
+        print(e)
+    return render(request, 'blog_detail.html', context)
+

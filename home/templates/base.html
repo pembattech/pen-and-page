@@ -28,15 +28,15 @@
             <li><a href="{% url 'home' %}">Home</a></li>
 
             {% if user.is_authenticated %}
-            <li><a href="{% url 'addblog' %}">Add Blog</a></li>
-            <li class="logout-button">
-              <a href="{% url 'logout' %}">Logout</a>
-            </li>
+            <li><a href="{% url 'addblog' %}">Write</a></li>
+
+              <li><a class="profile-link" href="#{{ user.username }}">{{ user.username }}</a></li>
+
+              <li><a class="logout-link" href="{% url 'logout' %}">Logout</a></li>
             {% else %}
-            <li><a href="{% url 'login' %}">Add Blog</a></li>
+            <li><a href="{% url 'login' %}">Write</a></li>
             <li><a href="{% url 'login' %}">Sign in</a></li>
             <li><a href="{% url 'register' %}">Get Started</a></li>
-
             {% endif %}
           </ul>
 
@@ -55,24 +55,11 @@
               />
             </div>
           </div>
-
           <footer class="left-footer" id="footer"></footer>
         </div>
 
         {% block content %} {% endblock %}
       </div>
     </div>
-
-    <script>
-      // copywrite with auto increase year
-      // start
-      document.addEventListener("DOMContentLoaded", function () {
-        var currentYear = new Date().getFullYear();
-        var footerText =
-          "Copyright &copy; " + currentYear + " All rights reserved";
-        document.getElementById("footer").innerHTML = footerText;
-      });
-      // end
-    </script>
   </body>
 </html>

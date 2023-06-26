@@ -1,7 +1,12 @@
-
+document.addEventListener("DOMContentLoaded", function () {
+    var currentYear = new Date().getFullYear();
+    var footerText =
+        "Copyright &copy; " + currentYear + " All rights reserved";
+    document.getElementById("footer").innerHTML = footerText;
+});
 
 function login() {
-    
+
     var csrf_token = document.getElementById("csrf").value
     var username = document.getElementById("username").value
     var password = document.getElementById("password").value

@@ -1,117 +1,40 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
 <div class="mid-grid">
-  <div class="articles">
+  <div class="articles-content">
     {% for blog in blogs %}
-    <img src="{{ blog.image.url }}" alt="Image" />
-    
-    <div class="article-item article-title">
-      <p>{{blog.title}}</p>
-    </div>
-    <div class="article-item  blog-content">
-      <p>{{blog.content}}</p>
-    </div>
-    <div class="article-item  blog-created_at">
-      <p>{{blog.created_at.date}}</p>
+    <div class="article-item">
+      <div class="card-horizontal">
+        <div class="img-circle-wrapper">
+          <div class="article-profilepicture-circle">
+            <a class="article-link" href="{% url 'blog_detail' blog.slug %}">
+              <img src="{{ blog.image.url }}" alt="img" />
+            </a>
+          </div>
+        </div>
+        <div class="card-body">
+          {% if blog.author != None %}
+            <div class="card-user">
+              <p>{{ blog.author }}</p>
+            </div>
+          {% endif %}
+          <div class="card-title">
+            <a class="article-link" href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a>
+          </div>
+          <div class="card-text">
+            <p>{{ blog.content }}</p>
+          </div>
+          <div class="card-footer">
+            <p><img class = "small-image" src="{% static 'image/calendar.png' %}" alt="calendar" />{{ blog.created_at.date }}</p>
+            <p><img class = "small-image" src="{% static 'image/category.png' %}" alt="category" />{{ blog.category }}</p>
+          </div>
+        </div>
+      </div>
     </div>
     {% endfor %}
+
   </div>
-
-  <!-- <div class="article odd">
-          <h2>Article 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-
-        <div class="article even">
-          <h2>Article 2</h2>
-          <p>
-            Sed do eiusmod tempor incididunt ut labore et dolore magna
-            aliqua.
-          </p>
-        </div>
-        <div class="article odd">
-          <h2>Article 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-
-        <div class="article even">
-          <h2>Article 2</h2>
-          <p>
-            Sed do eiusmod tempor incididunt ut labore et dolore magna
-            aliqua.
-          </p>
-        </div>
-        <div class="article odd">
-          <h2>Article 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-
-        <div class="article even">
-          <h2>Article 2</h2>
-          <p>
-            Sed do eiusmod tempor incididunt ut labore et dolore magna
-            aliqua.
-          </p>
-        </div><div class="article odd">
-          <h2>Article 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-
-        <div class="article even">
-          <h2>Article 2</h2>
-          <p>
-            Sed do eiusmod tempor incididunt ut labore et dolore magna
-            aliqua.
-          </p>
-        </div>
-        <div class="article odd">
-          <h2>Article 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-
-        <div class="article even">
-          <h2>Article 2</h2>
-          <p>
-            Sed do eiusmod tempor incididunt ut labore et dolore magna
-            aliqua.
-          </p>
-        </div>
-        <div class="article odd">
-          <h2>Article 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-
-        <div class="article even">
-          <h2>Article 2</h2>
-          <p>
-            Sed do eiusmod tempor incididunt ut labore et dolore magna
-            aliqua.
-          </p>
-        </div>
-        <div class="article odd">
-          <h2>Article 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-
-        <div class="article even">
-          <h2>Article 2</h2>
-          <p>
-            Sed do eiusmod tempor incididunt ut labore et dolore magna
-            aliqua.
-          </p>
-        </div>
-        <div class="article odd">
-          <h2>Article 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-
-        <div class="article even">
-          <h2>Article 2</h2>
-          <p>
-            Sed do eiusmod tempor incididunt ut labore et dolore magna
-            aliqua.
-          </p>
-        </div> -->
-  <!-- </div> -->
 </div>
-
 {% include 'right_grid.html' %} {% endblock %}
