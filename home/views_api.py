@@ -57,23 +57,22 @@ class RegisterView(APIView):
         response = {'status': 500, 'message': 'Something went wrong'}
         try:
             data = request.data
-
-            if data.get('username') is None:
+            if data.get('reg-username') is None:
                 response['message'] = 'key username not found'
                 raise Exception('key username not found')
 
-            if data.get('password') is None:
+            if data.get('reg-password') is None:
                 response['message'] = 'key password not found'
                 raise Exception('key password not found')
             check_user = User.objects.filter(
-                username=data.get('username')).first()
+                username=data.get('reg-username')).first()
             if check_user:
                 response['message'] = 'username  already taken'
                 raise Exception('username  already taken')
 
-            user_obj = User.objects.create(email=data.get('username'),
-                                           username=data.get('username'))
-            user_obj.set_password(data.get('password'))
+            user_obj = User.objects.create(email=data.get('reg-username'),
+                                           username=data.get('reg-username'))
+            user_obj.set_password(data.get('reg-password'))
             user_obj.save()
             
             token = generate_random_string(20)

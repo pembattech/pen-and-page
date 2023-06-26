@@ -14,9 +14,11 @@ def add_blog(request):
     return render(request, "addblog.html")
 
 def login_view(request):
+    print(request)
     return render(request, 'login.html')
 
 def register_view(request):
+    print(request)
     return render(request, 'register.html')
 
 def logout_view(request):

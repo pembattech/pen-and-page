@@ -24,7 +24,11 @@
             <a class="article-link" href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a>
           </div>
           <div class="card-text">
-            <p>{{ blog.content }}</p>
+            {% if blog.short_description != None %}
+              <p>{{ blog.short_description }}</p>
+            {% else %}
+              <p> Content: {{ blog.content }}</p>
+            {% endif %}
           </div>
           <div class="card-footer">
             <p><img class = "small-image" src="{% static 'image/calendar.png' %}" alt="calendar" />{{ blog.created_at.date }}</p>
@@ -37,4 +41,6 @@
 
   </div>
 </div>
-{% include 'right_grid.html' %} {% endblock %}
+{% include 'right_grid.html' %}
+{% endblock %}
+

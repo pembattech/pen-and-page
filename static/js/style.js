@@ -1,9 +1,10 @@
-document.addEventListener("DOMContentLoaded", function () {
+function setFooterText() {
     var currentYear = new Date().getFullYear();
     var footerText =
         "Copyright &copy; " + currentYear + " All rights reserved";
     document.getElementById("footer").innerHTML = footerText;
-});
+}
+document.addEventListener("DOMContentLoaded", setFooterText);
 
 function login() {
 
@@ -19,7 +20,6 @@ function login() {
         "username": username,
         "password": password
     }
-    console.log(data)
 
     fetch("/api/login/", {
         method: "POST",
@@ -45,19 +45,17 @@ function login() {
 
 function register() {
     var csrf_token = document.getElementById("csrf").value
-    var username = document.getElementById("username").value
-    var password = document.getElementById("password").value
+    var username = document.getElementById("reg-username").value
+    var password = document.getElementById("reg-password").value
 
     if (username == "" && password == "") {
         alert("You must enter both")
     }
 
     var data = {
-        "username": username,
-        "password": password
+        "reg-username": username,
+        "reg-password": password
     }
-
-    console.log(data)
 
     fetch("/api/register/", {
         method: "POST",

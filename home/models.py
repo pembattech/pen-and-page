@@ -7,7 +7,7 @@ from .utils import generate_slug
 class Blog(models.Model):
     title = models.CharField(max_length=1000)  # A field to store the title of the blog post.
     author = models.ForeignKey(User, on_delete=models.CASCADE, null= True)  # ForeignKey relationship with User model
-    author_image = models.ImageField(upload_to = "blog", null = True)
+    short_description = models.TextField(null=True)
     content = models.TextField()  # A field to store the main content of the blog post.
     category = models.CharField(max_length=250, null=True, blank=True)
     slug = models.SlugField(max_length=1000, null=True, blank=True)  # A field to store a URL-friendly version of the title.
