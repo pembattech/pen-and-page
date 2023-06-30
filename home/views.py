@@ -58,17 +58,16 @@ def blog_detail(request, slug):
         print(e)
     return render(request, 'blog_detail.html', context)
 
-def blog_category(request):
+def blog_category(request, category):
     context = {}
-    
     try:
-        categories = Blog.objects.values_list('category', flat=True).distinct()
-        context = {"categories": categories}
-        print(context)
+        categories = Blog.objects.filter(category = category)
+
+        context = {"ofcategory": categories}
     except Exception as e:
         print(e)
     
-    return render(request, 'right_grid.html', context)
+    return render(request, 'category_item.html', context)
 
 
 

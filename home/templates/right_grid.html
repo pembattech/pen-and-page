@@ -6,7 +6,7 @@
     <input type="text" placeholder="Type a keyword" />
     <img src="{% static 'image/ok_button.png' %}" alt="OK" class="ok-button" />
   </div>
-  
+
   <div class="categories-content">
     <div class="cat-list">
       <ul>
@@ -14,7 +14,10 @@
       </ul>
       {% for category in categories %}
       <ul>
-        <li class="cat-item"> {{ category }}</li>
+        <li class="cat-item">
+          <a href="{% url 'blog_category' category=category %}">{{ category }}</a>
+        </li>
+
       </ul>
 
     </div>
