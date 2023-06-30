@@ -9,3 +9,4 @@ urlpatterns = [
     path("logout/", logout_view, name = "logout" ),
     path("blog_detail/<slug>", blog_detail, name = "blog_detail" ),
 ]
+

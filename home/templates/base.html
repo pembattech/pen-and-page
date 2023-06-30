@@ -2,66 +2,58 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href=" {% static 'css/style.css' %} "
-    />
-    <script src="{% static 'js/style.js'%}"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <input type="hidden" id="csrf" value="{{csrf_token}}" />
-    <div class="container">
-      <div class="grid-container">
-        <div class="navbar left-grid">
-          <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
 
-            {% if user.is_authenticated %}
-            <li><a href="{% url 'addblog' %}">Write</a></li>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <link rel="stylesheet" type="text/css" href=" {% static 'css/style.css' %} " />
+  <script src="{% static 'js/style.js'%}"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
+</head>
 
-              <li><a class="profile-link" href="#{{ user.username }}">{{ user.username }}</a></li>
+<body>
+  <input type="hidden" id="csrf" value="{{csrf_token}}" />
+  <div class="container">
+    <div class="grid-container">
+      <div class="navbar left-grid">
+        <ul>
+          <li><a href="{% url 'home' %}">Home</a></li>
 
-              <li><a class="logout-link" href="{% url 'logout' %}">Logout</a></li>
-            {% else %}
-            <li><a href="{% url 'login' %}">Write</a></li>
-            <li><a href="{% url 'login' %}">Sign in</a></li>
-            <li><a href="{% url 'register' %}">Get Started</a></li>
-            {% endif %}
-          </ul>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'addblog' %}">Write</a></li>
 
-          <div class="logo">
-            <img src="{% static 'image/PenandPage_logo.png' %}" alt="Logo" />
-          </div>
+          <li><a class="profile-link" href="#{{ user.username }}">{{ user.username }}</a></li>
 
-          <div class="subs-for-news-letter">
-            <p>Subsribe for news letter</p>
-            <div class="input-container left-grid-input">
-              <input type="text" placeholder="Enter Email Address" />
-              <img
-                src="{% static 'image/ok_button.png' %}"
-                alt="Send"
-                class="ok-button"
-              />
-            </div>
-          </div>
-          <div class="footer">
-            <footer class="left-footer" id="footer"></footer>
-          </div>
+          <li><a class="logout-link" href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+          <li><a href="{% url 'login' %}">Write</a></li>
+          <li><a href="{% url 'login' %}">Sign in</a></li>
+          <li><a href="{% url 'register' %}">Get Started</a></li>
+          {% endif %}
+        </ul>
+
+        <div class="logo">
+          <img src="{% static 'image/PenandPage_logo.png' %}" alt="Logo" />
         </div>
 
-        {% block content %} {% endblock %}
+        <div class="subs-for-news-letter">
+          <p>Subsribe for news letter</p>
+          <div class="input-container left-grid-input">
+            <input type="text" placeholder="Enter Email Address" />
+            <img src="{% static 'image/ok_button.png' %}" alt="Send" class="ok-button" />
+          </div>
+        </div>
+        <div class="footer">
+          <footer class="left-footer" id="footer"></footer>
+        </div>
       </div>
+
+      {% block content %} {% endblock %}
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

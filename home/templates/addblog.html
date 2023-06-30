@@ -1,8 +1,164 @@
 {% extends "base.html" %}
 
 {% block content %}
-<body background="blue">
-    <h1>You can add blog here</h1>
-</body>
+<style>
+    textarea {
+        height: 30px;
+        overflow-y: hidden;
+        resize: none;
+        background-color: transparent;
+        padding: 0;
+        border: 0;
+        outline: 0;
+    }
 
+    .textarea {
+        position: relative;
+        margin: 48px auto 0;
+    }
+
+    .hiddenClone {
+        visibility: hidden;
+        position: absolute;
+        padding-bottom: 10px;
+        top: 0;
+        left: 0;
+        right: 0;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        border-bottom: 1px solid;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    .upload-btn-container {
+        padding-top: 8px;
+    }
+
+    .upload-btn {
+        border: 0;
+        background: #255ff4;
+        border-radius: 1.25em;
+        color: #fff;
+        cursor: pointer;
+        padding: 0.5em 1em;
+        position: relative;
+        text-align: center;
+        transition: all 0.1s linear;
+        width: 6em;
+        -webkit-tap-highlight-color: #0000;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .upload-btn:not(:disabled):focus,
+    .upload-btn:not(:disabled):hover {
+        background: #0b46da;
+    }
+
+    .upload-btn:focus {
+        outline: transparent;
+    }
+
+    .upload-btn-border {
+        display: block;
+        overflow: visible;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+    }
+</style>
+<div class="mid-grid">
+    <!-- Create the form -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="write-item write-container-title">
+
+            <div class="write-label-container">
+                {{ form.title.label_tag }}
+            </div>
+            <div class="vertical-line"></div>
+            {{ form.title }}
+        </div>
+
+
+        <div class="write-item textarea write-container-textarea">
+            <div class="write-label-container">
+                <p>Category</p>
+            </div>
+            <div class="vertical-line"></div>
+            <input type="text" placeholder="Enter Category">
+        </div>
+        
+        <div class="write-item textarea write-container-textarea">
+            <div class="write-label-container">
+                {{ form.short_description.label_tag }}
+            </div>
+            <div class="vertical-line"></div>
+            {{ form.short_description }}
+            {{ form.short_description.errors }}
+        </div>
+
+
+        <div class="write-item textarea write-container-textarea">
+            <div class="write-label-container">
+                {{ form.content.label_tag }}
+            </div>
+            <div class="vertical-line"></div>
+            {{ form.content }}
+            {{ form.content.errors }}
+        </div>
+
+
+        <div class="file-upload" onclick="setupFileUpload()">
+            <div class="file-upload-select">
+                <div class="file-select-button">CHOOSE FILE</div>
+                <div class="file-select-name">Attachment</div>
+                <input type="file" name="file-upload-input" id="file-upload-input">
+            </div>
+        </div>
+
+        <div class="upload-btn-container">
+            <button id="upload" class="upload-btn" type="submit">
+                <svg class="upload-btn-border" xmlns="http://www.w3.org/2000/svg" width="120px" height="50px"
+                    viewBox="0 0 120 50" role="presentation">
+                    <rect x="-2" y="-2" width="124" height="54" rx="27" ry="27" fill="none" stroke="#000"
+                        stroke-width="4" stroke-dasharray="0 310" opacity="0" />
+                </svg>
+                <span class="upload-btn-text">Upload</span>
+            </button>
+        </div>
+    </form>
+
+</div>
+<script>
+    "use strict";
+    function autoExpand(textAreaContainer) {
+        const textArea = textAreaContainer.querySelector('textarea');
+        const textAreaOriginalHeight = textArea.offsetHeight;
+        const hiddenClone = document.createElement('div');
+        hiddenClone.classList.add('hiddenClone');
+        textAreaContainer.appendChild(hiddenClone);
+        textArea.addEventListener('input', function (e) {
+            const input = e.target;
+            const newValue = input.value + '\n';
+            hiddenClone.textContent = newValue;
+            const hiddenCloneInnerHTML = hiddenClone.innerHTML;
+            const newContent = hiddenCloneInnerHTML.replace(/\n/g, '<br>');
+            hiddenClone.innerHTML = newContent;
+            const hiddenCloneHeight = hiddenClone.offsetHeight;
+            textArea.style.height = hiddenCloneHeight > textAreaOriginalHeight
+                ? `${hiddenCloneHeight}px`
+                : `${textAreaOriginalHeight}px`;
+        });
+    }
+    const textareaContainer = document.querySelector('.write-container-textarea');
+    autoExpand(textareaContainer);
+
+</script>
 {% endblock %}

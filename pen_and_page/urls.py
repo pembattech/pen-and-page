@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("home.urls")),
     path('api/', include("home.urls_api")),
+    path('froala_editor/',include('froala_editor.urls')),
 ]
 
 # Serve static files only during development

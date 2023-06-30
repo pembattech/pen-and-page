@@ -24,8 +24,11 @@ class LoginView(APIView):
             check_user = User.objects.filter(
                 username=data.get('username')).first()
 
+            print("*"*20)
+            print(check_user)
+            print("*"*20)
             if check_user is None:
-                response['message'] = 'invalid username , user not found'
+                response['message'] = 'invalid username, user not found'
                 raise Exception('invalid username not found')
 
             print(data.get('username'), data.get('password'))
@@ -36,7 +39,6 @@ class LoginView(APIView):
                 login(request, user_obj)
                 response['status'] = 200
                 response['message'] = 'Welcome'
-                print(User.objects.get())
             else:
                 response['message'] = 'invalid password'
                 raise Exception('invalid password')
@@ -57,6 +59,9 @@ class RegisterView(APIView):
         response = {'status': 500, 'message': 'Something went wrong'}
         try:
             data = request.data
+            print(response)
+            print(data)
+            print(response)
             if data.get('reg-username') is None:
                 response['message'] = 'key username not found'
                 raise Exception('key username not found')
@@ -67,10 +72,10 @@ class RegisterView(APIView):
             check_user = User.objects.filter(
                 username=data.get('reg-username')).first()
             if check_user:
-                response['message'] = 'username  already taken'
-                raise Exception('username  already taken')
+                response['message'] = 'username already taken'
+                raise Exception('username already taken')
 
-            user_obj = User.objects.create(email=data.get('reg-username'),
+            user_obj = User.objects.create(email=data.get('reg-email'),
                                            username=data.get('reg-username'))
             user_obj.set_password(data.get('reg-password'))
             user_obj.save()

@@ -1,4 +1,6 @@
 {% extends 'base.html' %} {% block content %}
+{% load static %}
+
 <div class="mid-grid">
   <div class="form">
     <div class="form-toggle"></div>
@@ -7,25 +9,17 @@
         <h1>Account Login</h1>
       </div>
       <div class="form-content">
-        <form method="post">
+        <form method="post" id="myLoginForm" autocomplete="off">
           {% csrf_token %}
           <div class="form-group">
             <label for="username">Username</label>
-            <input
-              id="username"
-              type="text"
-              name="username"
-              required="required"
-            />
+            <input id="username" type="text" name="username" />
+            <small>Error message</small>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              required="required"
-            />
+            <input id="password" type="password" name="password" />
+            <small>Error message</small>
           </div>
           <div class="form-group">
             <label class="form-remember">
@@ -34,11 +28,12 @@
             <a class="form-recovery" href="#">Forgot Password?</a>
           </div>
           <div class="form-group">
-            <button type="submit" onclick="return login()">Log In</button>
+            <button type="submit" onclick="LoginForm_validation()">Login</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-  {% endblock %}
 </div>
+
+{% endblock %}
