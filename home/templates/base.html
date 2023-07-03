@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home</title>
   <link rel="stylesheet" type="text/css" href=" {% static 'css/style.css' %} " />
-  <script src="{% static 'js/style.js'%}"></script>
+  <script src="{% static 'js/main.js'%}"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
@@ -23,13 +23,13 @@
           <li><a href="{% url 'home' %}">Home</a></li>
 
           {% if user.is_authenticated %}
-          <li><a href="{% url 'addblog' %}">Write</a></li>
+          <li><a href="{% url 'addblog' %}">Write a blog</a></li>
 
           <li><a class="profile-link" href="#{{ user.username }}">{{ user.username }}</a></li>
 
           <li><a class="logout-link" href="{% url 'logout' %}">Logout</a></li>
           {% else %}
-          <li><a href="{% url 'login' %}">Write</a></li>
+          <li><a href="{% url 'login' %}">Write a blog</a></li>
           <li><a href="{% url 'login' %}">Sign in</a></li>
           <li><a href="{% url 'register' %}">Get Started</a></li>
           {% endif %}

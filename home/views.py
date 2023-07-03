@@ -15,7 +15,7 @@ def add_blog(request):
         try:
             if request.method == 'POST':
                 form = BlogForm(request.POST)
-                image = request.FILES.get('file-upload-input', '')
+                image = request.FILES.get('chooseFile', '')
                 title = request.POST.get('title')
                 user = request.user
                 category = request.POST.get('category')
