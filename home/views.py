@@ -2,18 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout 
 
 from .form import *
-
-# Create your views here.
-
+from .models import CATEGORY_CHOICES
 
 def home(request):
-    # context = {"blogs": Blog.objects.all()}
     categories = Blog.objects.values_list('category', flat=True).distinct()
     context = {"categories": categories, "blogs": Blog.objects.all()}
     return render(request, 'home.html', context)
 
 def add_blog(request):
-    context = {'form': BlogForm}
+    context = {'form': BlogForm, 'category_choices': CATEGORY_CHOICES}
     try:
         if request.method == 'POST':
             form = BlogForm(request.POST)
@@ -21,19 +18,23 @@ def add_blog(request):
             title = request.POST.get('title')
             user = request.user
             category = request.POST.get('category')
-
+            
             if form.is_valid():
+                print("test2")
                 content = form.cleaned_data['content']
                 short_description = form.cleaned_data['short_description']
-
-            blog_obj = Blog.objects.create(
-                author=user, title=title, short_description = short_description, 
-                content=content, category = category , image=image
-            )
+                print("test3")
+                print(user, title, short_description, content, category, image)
+                
+                blog_obj = Blog.objects.create(
+                    author=user, title=title, short_description = short_description, 
+                    content=content, category = category , image=image
+                )
+                print(blog_obj)
             return redirect('/addblog/')
     except Exception as e:
         print(e)
-
+    
     return render(request, 'addblog.html', context)
 
 
@@ -68,8 +69,3 @@ def blog_category(request, category):
         print(e)
     
     return render(request, 'category_item.html', context)
-
-
-
-
-

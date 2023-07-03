@@ -1,164 +1,203 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <style>
-    textarea {
-        height: 30px;
-        overflow-y: hidden;
-        resize: none;
-        background-color: transparent;
-        padding: 0;
-        border: 0;
-        outline: 0;
+    .mid-grid .entry-container {
+        padding: 8px 30px;
     }
 
-    .textarea {
+    .entry-container-form label {
         position: relative;
-        margin: 48px auto 0;
-    }
-
-    .hiddenClone {
-        visibility: hidden;
-        position: absolute;
-        padding-bottom: 10px;
-        top: 0;
-        left: 0;
-        right: 0;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        border-bottom: 1px solid;
-        font-family: inherit;
-        font-size: inherit;
-        line-height: inherit;
-    }
-
-    .upload-btn-container {
-        padding-top: 8px;
-    }
-
-    .upload-btn {
-        border: 0;
-        background: #255ff4;
-        border-radius: 1.25em;
-        color: #fff;
-        cursor: pointer;
-        padding: 0.5em 1em;
-        position: relative;
-        text-align: center;
-        transition: all 0.1s linear;
-        width: 6em;
-        -webkit-tap-highlight-color: #0000;
-        -webkit-appearance: none;
-        appearance: none;
-    }
-
-    .upload-btn:not(:disabled):focus,
-    .upload-btn:not(:disabled):hover {
-        background: #0b46da;
-    }
-
-    .upload-btn:focus {
-        outline: transparent;
-    }
-
-    .upload-btn-border {
         display: block;
-        overflow: visible;
-        pointer-events: none;
-        position: absolute;
-        top: 0;
-        left: 0;
+    }
+
+    .entry-container-form label input,
+    .entry-container-form label textarea {
+        display: block;
+        padding: 20px;
         width: 100%;
-        height: auto;
+        margin-bottom: 10px;
+        outline: none;
+        border: 0;
+        border-radius: 5px;
+        transition: all 0.2s ease-in-out;
+        background: white;
+        font-weight: bold;
+        color: blue;
+    }
+
+    .entry-container-form label input::-moz-placeholder,
+    .entry-container-form label textarea::-moz-placeholder {
+        transition: all 0.2s ease-in-out;
+        color: green;
+        font-weight: bold;
+    }
+
+    .entry-container-form label input:-ms-input-placeholder,
+    .entry-container-form label textarea:-ms-input-placeholder {
+        transition: all 0.2s ease-in-out;
+        color: green;
+        font-weight: bold;
+    }
+
+    .entry-container-form label input::placeholder,
+    .entry-container-form label textarea::placeholder {
+        transition: all 0.2s ease-in-out;
+        color: green;
+        font-weight: bold;
+    }
+
+    .entry-container-form label input:focus,
+    .entry-container-form label textarea:focus,
+    .entry-container-form label input.populated,
+    .entry-container-form label textarea.populated {
+        padding-top: 28px;
+        padding-bottom: 12px;
+    }
+
+    .entry-container-form label input:focus::-moz-placeholder,
+    .entry-container-form label textarea:focus::-moz-placeholder,
+    .entry-container-form label input:focus::-moz-placeholder,
+    .entry-container-form label textarea.populated::-moz-placeholder {
+        color: transparent;
+    }
+
+    .entry-container-form label input:focus:-ms-input-placeholder,
+    .entry-container-form label textarea:focus:-ms-input-placeholder,
+    .entry-container-form label input.populated:-ms-input-placeholder,
+    .entry-container-form label textarea.populated:-ms-input-placeholder {
+        color: transparent;
+    }
+
+    .entry-container-form label input:focus::placeholder,
+    .entry-container-form label textarea:focus::placeholder,
+    .entry-container-form label input.populated::placeholder,
+    .entry-container-form label textarea.populated::placeholder {
+        color: transparent;
+    }
+
+    .entry-container-form label input:focus+span,
+    .entry-container-form label textarea:focus+span,
+    .entry-container-form label input.populated+span,
+    .entry-container-form label textarea.populated+span {
+        opacity: 1;
+        top: 10px;
+    }
+
+    .entry-container-form label span {
+        font-size: .8rem;
+        color: red;
+        position: absolute;
+        top: 0px;
+        left: 20px;
+        opacity: 0;
+        transition: all 0.2s ease-in-out;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+    .file-upload {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #FFC650;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    select {
+        display: block;
+        padding: 20px;
+        width: 300px;
+        margin-bottom: 10px;
+        outline: none;
+        border: 0;
+        border-radius: 5px;
+        transition: all 0.2s ease-in-out;
+        background-color: white;
+        font-weight: bold;
+        color: #FF7975;
+    }
+
+    select:focus {
+        padding-top: 28px;
+        padding-bottom: 12px;
+    }
+
+    span {
+        font-size: .8rem;
+        color: #A9A9A9;
+        position: absolute;
+        top: 0px;
+        left: 20px;
+        opacity: 0;
+    }
+
+    textarea {
+        resize: none;
+        overflow: hidden;
+        min-height: 50px;
     }
 </style>
+
 <div class="mid-grid">
-    <!-- Create the form -->
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="write-item write-container-title">
+    <div class="entry-container">
+        {% if user.is_authenticated %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="entry-container-form">
+                <label>
+                    {{ form.title }}
+                    <span id="{{ form.title.id_for_label }}">Title</span>
+                </label>
 
-            <div class="write-label-container">
-                {{ form.title.label_tag }}
+                <label>
+                    {{ form.short_description }}
+                    <!-- <textarea   oninput="autoExpand(this)">{{ form.short_description }}</textarea> -->
+                    <!-- <textarea id="myTextarea" oninput="autoExpand(this)" placeholder="Enter short-description here" required>{{ form.short_description }}</textarea> -->
+
+                    <span id="{{ form.short_description.id_for_label }}">Short Description</span>
+                </label>
+
+                <label>
+                    {{ form.content }}
+                    <span id="{{ form.content.id_for_label }}">Content</span>
+                </label>
+
             </div>
-            <div class="vertical-line"></div>
-            {{ form.title }}
-        </div>
 
+            <label for="id_category">Category:</label>
+            <select name="category" id="id_category" required>
+                {% for choice in category_choices %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endfor %}
+            </select>
 
-        <div class="write-item textarea write-container-textarea">
-            <div class="write-label-container">
-                <p>Category</p>
+            <div class="file-upload" onclick="setupFileUpload()">
+                <div class="file-upload-select">
+                    <div class="file-select-button">CHOOSE FILE</div>
+                    <div class="file-select-name">Attachment</div>
+                    <input type="file" name="file-upload-input" id="file-upload-input">
+                </div>
             </div>
-            <div class="vertical-line"></div>
-            <input type="text" placeholder="Enter Category">
-        </div>
+
+            <button type="submit">Submit</button>
+        </form>
+        {% else %}
         
-        <div class="write-item textarea write-container-textarea">
-            <div class="write-label-container">
-                {{ form.short_description.label_tag }}
-            </div>
-            <div class="vertical-line"></div>
-            {{ form.short_description }}
-            {{ form.short_description.errors }}
-        </div>
+        {% endif %}
 
-
-        <div class="write-item textarea write-container-textarea">
-            <div class="write-label-container">
-                {{ form.content.label_tag }}
-            </div>
-            <div class="vertical-line"></div>
-            {{ form.content }}
-            {{ form.content.errors }}
-        </div>
-
-
-        <div class="file-upload" onclick="setupFileUpload()">
-            <div class="file-upload-select">
-                <div class="file-select-button">CHOOSE FILE</div>
-                <div class="file-select-name">Attachment</div>
-                <input type="file" name="file-upload-input" id="file-upload-input">
-            </div>
-        </div>
-
-        <div class="upload-btn-container">
-            <button id="upload" class="upload-btn" type="submit">
-                <svg class="upload-btn-border" xmlns="http://www.w3.org/2000/svg" width="120px" height="50px"
-                    viewBox="0 0 120 50" role="presentation">
-                    <rect x="-2" y="-2" width="124" height="54" rx="27" ry="27" fill="none" stroke="#000"
-                        stroke-width="4" stroke-dasharray="0 310" opacity="0" />
-                </svg>
-                <span class="upload-btn-text">Upload</span>
-            </button>
-        </div>
-    </form>
-
+    </div>
 </div>
-<script>
-    "use strict";
-    function autoExpand(textAreaContainer) {
-        const textArea = textAreaContainer.querySelector('textarea');
-        const textAreaOriginalHeight = textArea.offsetHeight;
-        const hiddenClone = document.createElement('div');
-        hiddenClone.classList.add('hiddenClone');
-        textAreaContainer.appendChild(hiddenClone);
-        textArea.addEventListener('input', function (e) {
-            const input = e.target;
-            const newValue = input.value + '\n';
-            hiddenClone.textContent = newValue;
-            const hiddenCloneInnerHTML = hiddenClone.innerHTML;
-            const newContent = hiddenCloneInnerHTML.replace(/\n/g, '<br>');
-            hiddenClone.innerHTML = newContent;
-            const hiddenCloneHeight = hiddenClone.offsetHeight;
-            textArea.style.height = hiddenCloneHeight > textAreaOriginalHeight
-                ? `${hiddenCloneHeight}px`
-                : `${textAreaOriginalHeight}px`;
-        });
-    }
-    const textareaContainer = document.querySelector('.write-container-textarea');
-    autoExpand(textareaContainer);
 
+<script>
+    /* JavaScript function */
+    function autoExpand(textarea) {
+        textarea.style.height = 'auto'; // Reset the height to auto
+        textarea.style.height = textarea.scrollHeight + 'px'; // Set the height to match the content
+    }
 </script>
 {% endblock %}

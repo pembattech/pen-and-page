@@ -8,6 +8,6 @@ class BlogForm(forms.ModelForm):
         fields = ['title', 'short_description', 'content']
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Title'}),
-            'short_description': forms.Textarea(attrs={'placeholder': 'Enter short-description here'}),
-            'content': forms.Textarea(attrs={'placeholder': 'Enter content here'}),
+            "short_description":  forms.Textarea(attrs={'placeholder': 'Enter short-description here', 'oninput': 'autoExpand(this)'}),
+            'content': forms.Textarea(attrs={'placeholder': 'Enter content here', 'oninput': 'autoExpand(this)'}),
         }

@@ -574,55 +574,6 @@ li.cat-item::after {
     visibility: visible;
 }
 
-/* 
-.mid-grid .write-container textarea {
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    outline: 0;
-    resize: none;
-    width: 100%;
-    height: 50px;
-    min-height: 50px;
-    transition: height 0.2s ease;
-} 
-*/
-.write-item {
-    display: flex;
-    /* align-items: center; */
-}
-
-.write-label-container {
-    color: rgba(0, 0, 0, 0.6);
-    margin-right: 10px;
-    font-size: 14px;
-}
-
-.vertical-line {
-    display: inline-block;
-    border-left: 1px solid rgba(0, 0, 0, 0.6);
-    height: 25px;
-    margin-right: 10px;
-    vertical-align: middle;
-}
-
-.write-container-title {
-    align-items: center;
-}
-
-.write-container-title input {
-    font-size: 40px;
-}
-
-
-.write-container-title input::placeholder {
-    font-size: 40px;
-}
-
-.write-container-textarea textarea {
-    font-size: 16px;
-}
 
 .file-upload .file-upload-select {
     margin: 48px auto 0;
@@ -658,4 +609,44 @@ li.cat-item::after {
 
 .file-upload .file-upload-select input[type="file"] {
     display: none;
+}
+
+.upload-btn-container {
+    padding-top: 8px;
+}
+
+.upload-btn {
+    border: 0;
+    background: #255ff4;
+    border-radius: 1.25em;
+    color: #fff;
+    cursor: pointer;
+    padding: 0.5em 1em;
+    position: relative;
+    text-align: center;
+    transition: all 0.1s linear;
+    width: 6em;
+    -webkit-tap-highlight-color: #0000;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.upload-btn:not(:disabled):focus,
+.upload-btn:not(:disabled):hover {
+    background: #0b46da;
+}
+
+.upload-btn:focus {
+    outline: transparent;
+}
+
+.upload-btn-border {
+    display: block;
+    overflow: visible;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
 }
