@@ -304,6 +304,27 @@ a.article-link {
     font-size: 30px;
 }
 
+.readmore a {
+    line-height: 1em;
+    letter-spacing: 0.06em;
+    font-family: 'Lato', sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    text-decoration: none;
+    color: #fff;
+    background: #231f20;
+    display: inline-block;
+    padding: 10px 7px 10px 10px;
+    transition: background 200ms;
+    border-radius: 4px;
+}
+
+.readmore a:hover {
+    background: #cea052;
+    color: #231f20;
+}
+
+
 /* 
 .article-item {
     display: flex;

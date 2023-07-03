@@ -145,7 +145,6 @@
 
 <div class="mid-grid">
     <div class="entry-container">
-        {% if user.is_authenticated %}
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="entry-container-form">
@@ -186,9 +185,6 @@
 
             <button type="submit">Submit</button>
         </form>
-        {% else %}
-        
-        {% endif %}
 
     </div>
 </div>

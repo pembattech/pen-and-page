@@ -16,23 +16,28 @@
         </div>
         <div class="card-body">
           {% if blog.author != None %}
-            <div class="card-user">
-              <p>{{ blog.author }}</p>
-            </div>
+          <div class="card-user">
+            <p>{{ blog.author }}</p>
+          </div>
           {% endif %}
           <div class="card-title">
             <a class="article-link" href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a>
           </div>
           <div class="card-text">
             {% if blog.short_description != None %}
-              <p>{{ blog.short_description }}</p>
+            <p>{{ blog.short_description }}</p>
             {% else %}
-              <p> Content: {{ blog.content }}</p>
+            <p> Content: {{ blog.content }}</p>
             {% endif %}
           </div>
           <div class="card-footer">
-            <p><img class = "small-image" src="{% static 'image/calendar.png' %}" alt="calendar" />{{ blog.created_at.date }}</p>
-            <p><img class = "small-image" src="{% static 'image/category.png' %}" alt="category" />{{ blog.category }}</p>
+            <p><img class="small-image" src="{% static 'image/calendar.png' %}"
+                alt="calendar" />{{blog.created_at.date}}</p>
+            <p><img class="small-image" src="{% static 'image/category.png' %}" alt="category" />{{ blog.category }}</p>
+
+            <div class="readmore">
+              <a class="article-link" href="{% url 'blog_detail' blog.slug %}">Read More</a>
+            </div>
           </div>
         </div>
       </div>
@@ -43,4 +48,3 @@
 </div>
 {% include 'right_grid.html' %}
 {% endblock %}
-

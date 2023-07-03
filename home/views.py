@@ -10,32 +10,36 @@ def home(request):
     return render(request, 'home.html', context)
 
 def add_blog(request):
-    context = {'form': BlogForm, 'category_choices': CATEGORY_CHOICES}
-    try:
-        if request.method == 'POST':
-            form = BlogForm(request.POST)
-            image = request.FILES.get('file-upload-input', '')
-            title = request.POST.get('title')
-            user = request.user
-            category = request.POST.get('category')
-            
-            if form.is_valid():
-                print("test2")
-                content = form.cleaned_data['content']
-                short_description = form.cleaned_data['short_description']
-                print("test3")
-                print(user, title, short_description, content, category, image)
+    if request.user.is_authenticated:
+        context = {'form': BlogForm, 'category_choices': CATEGORY_CHOICES}
+        try:
+            if request.method == 'POST':
+                form = BlogForm(request.POST)
+                image = request.FILES.get('file-upload-input', '')
+                title = request.POST.get('title')
+                user = request.user
+                category = request.POST.get('category')
                 
-                blog_obj = Blog.objects.create(
-                    author=user, title=title, short_description = short_description, 
-                    content=content, category = category , image=image
-                )
-                print(blog_obj)
-            return redirect('/addblog/')
-    except Exception as e:
-        print(e)
-    
-    return render(request, 'addblog.html', context)
+                if form.is_valid():
+                    print("test2")
+                    content = form.cleaned_data['content']
+                    short_description = form.cleaned_data['short_description']
+                    print("test3")
+                    print(user, title, short_description, content, category, image)
+                    
+                    blog_obj = Blog.objects.create(
+                        author=user, title=title, short_description = short_description, 
+                        content=content, category = category , image=image
+                    )
+                    print(blog_obj)
+                return redirect('/addblog/')
+        except Exception as e:
+            print(e)
+        
+        return render(request, 'addblog.html', context)
+    else:
+        return render(request, 'login.html')
+        
 
 
 def login_view(request):
