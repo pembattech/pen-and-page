@@ -16,11 +16,9 @@
         <li class="cat-item">
           <a href="{% url 'blog_category' category=category %}">{{ category }}</a>
         </li>
-
       </ul>
-
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
 </div>
 </div>
