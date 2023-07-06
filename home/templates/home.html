@@ -17,7 +17,7 @@
         <div class="card-body">
           {% if blog.author != None %}
           <div class="card-user">
-            <p>{{ blog.author }}</p>
+            <p><a class="profile-link" href="{% url 'author_profile' authorid=blog.author_id %}">{{ blog.author }}</a></p>
           </div>
           {% endif %}
           <div class="card-title">

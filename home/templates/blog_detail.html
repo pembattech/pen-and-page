@@ -1,26 +1,30 @@
 {% extends "base.html" %} {% block content %}
 {% load static %}
-<<<<<<< HEAD
 <style>
   h1 {
     font-size: 30px;
     color: black;
   }
+
+  .grid-container {
+    grid-template-columns: 345px 940px;
+  }
 </style>
-=======
->>>>>>> 91f734945d32bb74bd66464e8c9851375f353ecc
 
 <div class="mid-grid">
   <div class="article-container">
     <div class="blog-title">{{blog_obj.title}}</div>
-
     <div class="blog_uploader">{{blog_obj.author}}</div>
 
     <div class="card-footer">
       <p><img class="small-image" src="{% static 'image/calendar.png' %}" alt="calendar" />{{blog_obj.created_at.date}}</p>
       <p><img class="small-image" src="{% static 'image/category.png' %}" alt="category" />{{ blog_obj.category }}</p>
     </div>
-
+    
+    <div class="cover-image">
+      <img src="{{ blog_obj.image.url }}" alt="cover image" srcset="">
+    </div>
+    
     <div class="full-blog-content">{{blog_obj.content}}</div>
   </div>
 
