@@ -1,26 +1,28 @@
 {% load static %}
 {% block content %}
 <div class="right-grid">
-  <div class="input-container right-grid-input">
-    <input type="text" placeholder="Type a keyword" />
-    <img src="{% static 'image/ok_button.png' %}" alt="OK" class="ok-button" />
-  </div>
+  <div class="right-container">
 
-  <div class="categories-content">
-    <div class="cat-list">
-      <ul>
-        <li class="title">Categories</li>
-      </ul>
-      {% for category in categories %}
-      <ul>
-        <li class="cat-item">
-          <a href="{% url 'blog_category' category=category %}">{{ category }}</a>
-        </li>
-      </ul>
-      {% endfor %}
+    <div class="input-container right-grid-input">
+      <input type="text" placeholder="Type a keyword" />
+      <img src="{% static 'image/ok_button.png' %}" alt="OK" class="ok-button" />
+    </div>
+
+    <div class="categories-content">
+      <div class="cat-list">
+        <ul>
+          <li class="heading">Categories</li>
+        </ul>
+        {% for category in categories %}
+        <ul>
+          <li class="cat-item">
+            <a href="{% url 'blog_category' category=category %}">{{ category }}</a>
+          </li>
+        </ul>
+        {% endfor %}
+      </div>
     </div>
   </div>
-</div>
 </div>
 
 {% endblock %}

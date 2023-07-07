@@ -1,5 +1,6 @@
 from django import forms
-from .models import *
+from .models import Blog
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
 class BlogForm(forms.ModelForm):
@@ -8,6 +9,6 @@ class BlogForm(forms.ModelForm):
         fields = ['title', 'short_description', 'content']
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Title'}),
-            "short_description":  forms.Textarea(attrs={'placeholder': 'Provide a brief description here', 'oninput': 'autoExpand(this)'}),
-            'content': forms.Textarea(attrs={'placeholder': 'Tell your story', 'oninput': 'autoExpand(this)'}),
+            'short_description': forms.Textarea(attrs={'placeholder': 'Provide a brief description here', 'oninput': 'autoExpand(this)'}),
+            'content': forms.CharField(widget=CKEditorUploadingWidget()),
         }

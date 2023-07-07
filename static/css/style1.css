@@ -9,7 +9,6 @@ body {
     background: linear-gradient(45deg,
             rgba(66, 183, 245, 0.8) 0%,
             rgba(66, 245, 189, 0.4) 100%);
-    color: rgba(0, 0, 0, 0.8);
 }
 
 a {
@@ -55,25 +54,23 @@ input::placeholder {
 
 .grid-container {
     display: grid;
-    grid-template-columns: 300px 1fr 300px;
-    grid-template-areas:
-        "left-grid mid-grid right-grid";
-
+    grid-template-columns: 215px 1fr 345px;
+    grid-template-rows: 100vh;
 }
 
 .left-grid {
+    grid-column: 1;
     font-size: 16px;
-    background: linear-gradient(45deg,
-            rgba(66, 183, 245, 0.8) 0%,
-            rgba(66, 209, 245, 0.678) 100%);
-    /* background-color: #4ddffc; */
-    grid-area: left-grid;
+    /* background: linear-gradient(
+      45deg,
+      rgba(66, 183, 245, 0.8) 0%,
+      rgba(66, 245, 189, 0.4) 100%
+    ); */
+    /* background-color: #8adeef; */
+    background-color: red;
     position: fixed;
     top: 0;
     left: 0;
-    width: 300px;
-    /* Adjust as per your requirements */
-    overflow-y: auto;
     height: 100vh;
 }
 
@@ -121,6 +118,7 @@ input::placeholder {
     /* Slide in the underline on hover */
 }
 
+
 .cat-item::after {
     content: "";
     position: absolute;
@@ -136,6 +134,7 @@ input::placeholder {
     align-items: center;
     padding: 8px 30px;
 }
+
 
 a.profile-link:hover {
     color: #868686;
@@ -166,6 +165,7 @@ a.profile-link:hover {
 .input-container {
     position: relative;
     display: inline-block;
+    padding: 8px 30px;
 }
 
 .input-container input[type="text"] {
@@ -218,8 +218,9 @@ footer#footer.left-footer {
 }
 
 .mid-grid {
-    grid-area: mid-grid;
-    overflow-y: auto;
+    grid-column: 2;
+    overflow-y: scroll;
+    background-color: black;
 }
 
 /* Hide scrollbar */
@@ -229,13 +230,17 @@ footer#footer.left-footer {
 }
 
 .mid-grid .articles-content {
-    padding: 8px 25px;
+    padding-left: 25px;
+    padding-top: 8px;
+}
+
+.article-item {
+    padding: 8px 30px;
 }
 
 .card-horizontal {
     display: flex;
     flex: 1 1 auto;
-    margin-bottom: 15px;
 }
 
 .article-profilepicture-circle {
@@ -268,10 +273,8 @@ a.article-link {
 }
 
 .card-text {
-    padding: 5px 0px;
+    padding: 8px 0px;
     margin-bottom: -8px;
-    font-size: 15px;
-    text-align: justify;
 }
 
 .card-footer p {
@@ -309,8 +312,8 @@ a.article-link {
     color: #231f20;
 }
 
-.mid-grid .article-container {
-    padding: 8px 25px;
+.article-container {
+    padding-top: 8px;
 }
 
 .blog-title {
@@ -318,7 +321,7 @@ a.article-link {
     font-weight: 600;
 }
 
-.cover-image img {
+.cover-image img{
     width: 100%;
 }
 
@@ -332,44 +335,42 @@ a.article-link {
 }
 
 .right-grid {
-    background: linear-gradient(45deg,
+    /* background: linear-gradient(45deg,
             rgba(66, 183, 245, 0.8) 0%,
-            rgba(66, 245, 189, 0.4) 100%);
-    grid-area: right-grid;
-    overflow-y: auto;
-    height: 100vh;
-}
-
-.right-grid .right-container {
-    padding: 8px 25px;
+            rgba(66, 245, 189, 0.4) 100%); */
+    background: white;
 }
 
 .right-grid-input input[type="text"] {
+    margin-top: 10px;
     text-align: center;
-    margin-bottom: 10px;
 }
 
 .right-grid-input img.ok-button {
-    margin: 7px 15px 5px 10px;
+    margin: 25px 40px 5px 10px;
     width: 25px;
 }
 
-.heading {
+
+
+.title {
     font-weight: 600;
+    padding: 8px 30px;
 }
 
 li.cat-item {
     position: relative;
     opacity: 0.6;
+    padding: 8px 30px;
     font-size: 14.4px;
 }
 
-.cat-item::after {
+
+li.cat-item::after {
     content: "";
     position: absolute;
     bottom: 0;
-    left: 0;
-    width: 100%;
+    width: 90%;
     height: 1px;
     background-color: #000;
 }
@@ -631,8 +632,4 @@ li.cat-item {
     left: 0;
     width: 100%;
     height: auto;
-}
-
-.mid-grid .categoried-item {
-    padding: 8px 25px;
 }
