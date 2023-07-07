@@ -1,4 +1,19 @@
-venv
+# Ignore compiled Python files
+*.pyc
+
+# Ignore virtual environment
+venv/
+
+# Ignore IDE and editor files
+.idea/
+.vscode/
+
+# Ignore cache and temporary files
+__pycache__/
+
+
 TODO
-__pycache__
-*test*
+static/ckeditor/
+
+modeltest.py
+*test*.*
