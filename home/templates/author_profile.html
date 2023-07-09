@@ -4,18 +4,12 @@
 
 {% load static %}
 <style>
-    .author-container {
-        margin-top: 8px;
-        display: grid;
-        grid-template-columns: 1fr 300px;
+    .mid-grid .author-profile-container {
+        padding: 8px 25px;
     }
 
     p.author-title {
         font-size: 30px;
-    }
-
-    .grid-container {
-        grid-template-columns: 345px 940px;
     }
 
     .about-author {
@@ -38,13 +32,13 @@
 </style>
 
 <div class="mid-grid">
-    <div class="author-container">
+    <div class="author-profile-container">
 
+        {% if blog_obj %}
         <div class="author-blog-item">
             <p class="author-title">{{blog_author}}</p>
 
             <div class="article-item">
-                {% if blog_obj %}
                 {% for blog in blog_obj %}
 
                 <div class="card-body">
@@ -53,17 +47,20 @@
                     </div>
 
                     <div class="edit-delete-btn">
-                        <button class="button-hold" type="submit"><a href="{% url 'edit_blog' slug=blog.slug %}">Edit</a></button>
-                        <button class="button-hold" type="submit"><a href="{% url 'delete_blog' id=blog.id %}">Delete</a></button>
+                        <button class="button-hold" type="submit"><a
+                                href="{% url 'edit_blog' slug=blog.slug %}">Edit</a></button>
+                        <button class="button-hold" type="submit"><a
+                                href="{% url 'delete_blog' id=blog.id %}">Delete</a></button>
                     </div>
                 </div>
                 <div class="horizontal-line"></div>
                 {% endfor %}
-                {% else %}
-                <p>No post</p>
-                {% endif %}
             </div>
         </div>
+        {% else %}
+        <p class="author-title">{{ logged_user }}</p>
+        <p>No post</p>
+        {% endif %}
 
     </div>
 </div>

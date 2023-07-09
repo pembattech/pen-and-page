@@ -27,6 +27,7 @@
           <li><a class="profile-link" href="{% url 'author_profile' authorid=user.id %}">{{ user.username }}</a></li>
 
           <li><a class="logout-link" href="{% url 'logout' %}">Logout</a></li>
+          
           {% else %}
           <li><a href="{% url 'login' %}">Write a blog</a></li>
           <li><a href="{% url 'login' %}">Sign in</a></li>

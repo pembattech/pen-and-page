@@ -7,7 +7,7 @@
   }
 
   .grid-container {
-    grid-template-columns: 345px 940px;
+    grid-template-columns: 300px 1fr;
   }
 </style>
 
@@ -22,10 +22,10 @@
     </div>
     
     <div class="cover-image">
-      <img src="{{ blog_obj.image.url }}" alt="cover image" srcset="">
+      <img src="{{ blog_obj.cover_image.url }}" alt="cover image" srcset="">
     </div>
     
-    <div class="full-blog-content">{{blog_obj.content}}</div>
+    <div class="full-blog-content">{{ blog_obj.content|safe }}</div>
   </div>
 
 </div>

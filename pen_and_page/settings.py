@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'rest_framework',
+    'ckeditor',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pen_and_page.middleware.AdminRedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'pen_and_page.urls'
@@ -118,12 +121,38 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
 STATICFILES_DIRS = [BASE_DIR, 'static/']
 
 MEDIA_ROOT = (BASE_DIR)
-
 MEDIA_URL = '/media/'
+
+# CKEditor Settings
+CKEDITOR_UPLOAD_PATH = os.path.join(*STATICFILES_DIRS, 'uploads/')
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
+CKEDITOR_CONFIGS = {
+    'default':
+        {
+            'toolbar': [
+                ['Bold', 'Italic', 'Underline', 'Strike',
+                    'Subscript', 'Superscript'],
+                ['NumberedList', 'BulletedList', 'Indent', 'Outdent'],
+                ['Link', 'Unlink'],
+                ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+                ['Undo', 'Redo'],
+                ['Source', 'Maximize'],
+                ['Format', 'Styles'],
+            ],
+            'width': 'auto',
+            'extraPlugins': ','.join([
+                'codesnippet',
+                'placeholder',
+            ]),
+            'placeholder': 'Enter your content here...',
+        },
+}
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
