@@ -1,14 +1,15 @@
 from django import forms
-from .models import Blog
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
-
+from ckeditor.widgets import CKEditorWidget
+from .models import *
 
 class BlogForm(forms.ModelForm):
+
     class Meta:
         model = Blog
-        fields = ['title', 'short_description', 'content']
+        fields = ["title", "content", "category"]
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Title'}),
-            'short_description': forms.Textarea(attrs={'placeholder': 'Provide a brief description here', 'oninput': 'autoExpand(this)'}),
-            'content': forms.CharField(widget=CKEditorUploadingWidget()),
+            'title': forms.TextInput(attrs={'class': 'blogform-title', "label": "False", "placeholder": "New post title here..."}),
+            'content': forms.Textarea(attrs={'class': 'blogform-content'}),
+            'cover_image': forms.ClearableFileInput(attrs={'class': 'blogform-fileupload input-file'}),
+            'category': forms.Select(attrs={'class': 'blogform-category'}),
         }

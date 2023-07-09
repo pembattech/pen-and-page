@@ -17,22 +17,21 @@ def add_blog(request):
         try:
             if request.method == 'POST':
                 form = BlogForm(request.POST)
-                image = request.FILES.get('chooseFile', '')
                 title = request.POST.get('title')
+                print("test1")
+                print(title)
+                image = request.FILES.get('cover_image', '')
+                print(image)
                 user = request.user
-                category = request.POST.get('category')
 
+                category = request.POST.get('category')
+                print(category)
                 if form.is_valid():
                     print("test2")
                     content = form.cleaned_data['content']
-                    short_description = form.cleaned_data['short_description']
-                    print("test3")
-                    print(user, title, short_description,
-                          content, category, image)
 
                     blog_obj = Blog.objects.create(
-                        author=user, title=title, short_description=short_description,
-                        content=content, category=category, image=image
+                        author=user, title=title, content=content, category=category, cover_image=image
                     )
                     print(blog_obj)
                 return redirect('/addblog/')
@@ -45,17 +44,21 @@ def add_blog(request):
 
 
 def login_view(request):
-    print(request)
+    if request.user.is_authenticated:
+        return redirect("/")
     return render(request, 'login.html')
 
 
 def register_view(request):
+    if request.user.is_authenticated:
+        return redirect("/")
     print(request)
     return render(request, 'register.html')
 
 
 def logout_view(request):
     logout(request)
+    request.session.flush()
     return redirect("/")
 
 
@@ -63,6 +66,8 @@ def blog_detail(request, slug):
     context = {}
     try:
         blog_obj = Blog.objects.filter(slug=slug).first()
+        categories = Blog.objects.values_list('category', flat=True).distinct()
+        context["categories"] = categories
         context['blog_obj'] = blog_obj
     except Exception as e:
         print(e)
@@ -73,8 +78,9 @@ def blog_category(request, category):
     context = {}
     try:
         categories = Blog.objects.filter(category=category)
-
         context = {"ofcategory": categories}
+        categories = Blog.objects.values_list('category', flat=True).distinct()
+        context["categories"] = categories
     except Exception as e:
         print(e)
 
@@ -135,13 +141,9 @@ def edit_blog(request, slug):
             if form.is_valid():
                 print("test2")
                 content = form.cleaned_data['content']
-                short_description = form.cleaned_data['short_description']
-                print("test3")
-                print(user, title, short_description,
-                      content, category, image)
 
                 blog_obj = Blog.objects.create(
-                    author=user, title=title, short_description=short_description,
+                    author=user, title=title,
                     content=content, category=category, image=image
                 )
                 print(blog_obj)

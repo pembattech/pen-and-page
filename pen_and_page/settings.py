@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pen_and_page.middleware.AdminRedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'pen_and_page.urls'
@@ -133,13 +134,25 @@ CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.j
 CKEDITOR_CONFIGS = {
     'default':
         {
-            'toolbar': 'full',
+            'toolbar': [
+                ['Bold', 'Italic', 'Underline', 'Strike',
+                    'Subscript', 'Superscript'],
+                ['NumberedList', 'BulletedList', 'Indent', 'Outdent'],
+                ['Link', 'Unlink'],
+                ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+                ['Undo', 'Redo'],
+                ['Source', 'Maximize'],
+                ['Format', 'Styles'],
+            ],
             'width': 'auto',
             'extraPlugins': ','.join([
                 'codesnippet',
+                'placeholder',
             ]),
+            'placeholder': 'Enter your content here...',
         },
 }
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
