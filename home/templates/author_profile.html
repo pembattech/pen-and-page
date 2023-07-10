@@ -4,9 +4,6 @@
 
 {% load static %}
 <style>
-    .mid-grid .author-profile-container {
-        padding: 8px 25px;
-    }
 
     p.author-title {
         font-size: 30px;
@@ -20,14 +17,55 @@
         font-size: 16px;
     }
 
-    .horizontal-line {
-        border-top: 1px solid rgba(0, 0, 0, 0.300);
-        margin-top: 10px;
+    .article-item {
         margin-bottom: 10px;
     }
 
-    .article-item {
-        padding: 0;
+    .author-blog-item .heading {
+        font-size: 20px;
+    }
+
+    .posts-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: var(--main-padding);
+    }
+
+    .posts-grid:hover {
+        background-color: var(--sidebar-hover-bgcolor);
+    }
+
+    .posts-grid .card-title {
+        grid-column: 1;
+    }
+
+    .posts-grid .card-title .card-footer {
+        font-weight: 400;
+    }
+
+    .posts-grid .option {
+        grid-column-start: 2;
+        grid-column-end: span 1;
+        justify-self: end;
+        display: inline;
+    }
+
+    .posts-grid .option p {
+        display: inline;
+        padding: 10px;
+        font-size: 14px;
+        color: var(--grey-color);
+    }
+
+    .posts-grid .option p:hover {
+        background-color: var(--sidebar-hover-bgcolor);
+        border: 0;
+        border-radius: 5px;
+        color: #000;
+    }
+
+    .posts-grid .option p:hover a {
+        color: black;
     }
 </style>
 
@@ -36,34 +74,40 @@
 
         {% if blog_obj %}
         <div class="author-blog-item">
-            <p class="author-title">{{blog_author}}</p>
+            <p class="heading">Posts</p>
+
+            {% for blog in blog_obj %}
 
             <div class="article-item">
-                {% for blog in blog_obj %}
+                <div class="posts-grid">
 
-                <div class="card-body">
                     <div class="card-title">
-                        <p class="article-link">{{ blog.title }}</p>
+                        <a class="article-link" href="{% url 'blog_detail' blog.slug %}">
+                            <p class="article-link">{{ blog.title }}</p>
+                        </a>
+                        <div class="card-footer">
+                            <p>Published: {{blog.created_at.date}}</p>
+                        </div>
                     </div>
 
-                    <div class="edit-delete-btn">
-                        <button class="button-hold" type="submit"><a
-                                href="{% url 'edit_blog' slug=blog.slug %}">Edit</a></button>
-                        <button class="button-hold" type="submit"><a
-                                href="{% url 'delete_blog' id=blog.id %}">Delete</a></button>
+                    {% if logged_user == blog.author %}
+                    <div class="option">
+                        <p><a href="{% url 'edit_blog' slug=blog.slug %}">Edit</a></p>
+                        <p><a href="{% url 'delete_blog' id=blog.id %}">Delete</a></p>
                     </div>
+                    {% endif %}
                 </div>
-                <div class="horizontal-line"></div>
-                {% endfor %}
+                <!-- <div class="horizontal-line"></div> -->
             </div>
+            {% endfor %}
         </div>
+
         {% else %}
         <p class="author-title">{{ logged_user }}</p>
         <p>No post</p>
         {% endif %}
 
     </div>
-</div>
 
 </div>
 {% endblock %}

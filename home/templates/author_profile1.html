@@ -4,18 +4,12 @@
 
 {% load static %}
 <style>
-    .author-container {
-        margin-top: 8px;
-        display: grid;
-        grid-template-columns: 1fr 300px;
+    .mid-grid .author-profile-container {
+        padding: 8px 25px;
     }
 
     p.author-title {
         font-size: 30px;
-    }
-
-    .grid-container {
-        grid-template-columns: 345px 940px;
     }
 
     .about-author {
@@ -38,8 +32,9 @@
 </style>
 
 <div class="mid-grid">
-    <div class="author-container">
+    <div class="author-profile-container">
 
+        {% if blog_obj %}
         <div class="author-blog-item">
             <p class="author-title">{{blog_author}}</p>
 
@@ -48,40 +43,24 @@
 
                 <div class="card-body">
                     <div class="card-title">
-                        <a class="article-link" href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a>
+                        <p class="article-link">{{ blog.title }}</p>
                     </div>
 
-                    <div class="card-text">
-                        <p>{{ blog.short_description }}</p>
+                    <div class="edit-delete-btn">
+                        <button class="button-hold" type="submit"><a
+                                href="{% url 'edit_blog' slug=blog.slug %}">Edit</a></button>
+                        <button class="button-hold" type="submit"><a
+                                href="{% url 'delete_blog' id=blog.id %}">Delete</a></button>
                     </div>
-                    <div class="card-footer">
-                        <p><img class="small-image" src="{% static 'image/calendar.png' %}"
-                                alt="calendar" />{{blog.created_at.date}}</p>
-                        <p><img class="small-image" src="{% static 'image/category.png' %}" alt="category" />{{blog.category }}</p>
-
-                        <div class="readmore">
-                            <a class="article-link" href="{% url 'blog_detail' blog.slug %}">Read More</a>
-                        </div>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
                 </div>
                 <div class="horizontal-line"></div>
                 {% endfor %}
             </div>
         </div>
-        <div class="about-author">
-            <p>{{blog_author}}</p>
-        </div>
+        {% else %}
+        <p class="author-title">{{ logged_user }}</p>
+        <p>No post</p>
+        {% endif %}
 
     </div>
 </div>

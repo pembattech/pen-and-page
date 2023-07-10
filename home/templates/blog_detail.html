@@ -1,32 +1,149 @@
 {% extends "base.html" %} {% block content %}
 {% load static %}
+
 <style>
-  h1 {
-    font-size: 30px;
-    color: black;
+  .commentbox-app {
+    font-family: inherit;
+    color: #4a4a4a;
+    font-size: 14px;
   }
 
-  .grid-container {
-    grid-template-columns: 300px 1fr;
+  .commentbox-app .comment-input,
+  .commentbox-app .comment-btn {
+    display: inline-block;
+    height: 70px;
+    border: 0;
+    border-radius: 5px;
+  }
+
+  .commentbox-app .comment-input {
+    appearance: none;
+    border: 0;
+    border-left: 3px solid transparent;
+    background-color: #EEE;
+    padding: 10px 10px 10px 32px;
+    transition: 0.65s ease;
+  }
+
+  .commentbox-app .comment-input:focus {
+    border-color: orange;
+    background-color: #fff;
+  }
+
+  .commentbox-app .comment-btn {
+    appearance: none;
+    background-color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    color: orange;
+    padding: 10px 32px;
+    line-height: 1.5;
+    transition: 0.65s ease;
+  }
+
+  .commentbox-app .comment-btn,
+  .commentbox-app .comment-btn:focus,
+  .commentbox-app .comment-btn:active {
+    border: 0;
+  }
+
+  .commentbox-app .comment-btn:hover {
+    background-color: orange;
+    color: #fff;
+  }
+
+  .commentbox-app .comment-btn:hover+.comment-input {
+    background-color: #fff;
+    border-color: orange;
+  }
+
+  .commentbox-app .comment-stream {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .commentbox-app .comment-stream .comment-remove {
+    display: none;
+    background-color: red;
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    margin-left: 12px;
+    padding: 0 12px;
+    opacity: 0.75;
+    cursor: pointer;
+  }
+
+  .commentbox-app .comment-stream .comment-remove:hover {
+    opacity: 1;
+  }
+
+  .commentbox-app .comment-stream li {
+    font-size: 14px;
+    padding-left: 10px;
+    border-left: 3px solid #4a4a4a;
+    margin-bottom: 25px;
+  }
+
+  .commentbox-app .comment-stream li:hover .comment-remove {
+    display: inline-block;
   }
 </style>
-
 <div class="mid-grid">
   <div class="article-container">
-    <div class="blog-title">{{blog_obj.title}}</div>
-    <div class="blog_uploader">{{blog_obj.author}}</div>
+    <div class="article">
 
-    <div class="card-footer">
-      <p><img class="small-image" src="{% static 'image/calendar.png' %}" alt="calendar" />{{blog_obj.created_at.date}}</p>
-      <p><img class="small-image" src="{% static 'image/category.png' %}" alt="category" />{{ blog_obj.category }}</p>
+      <div class="blog-title">
+        <p>{{blog_obj.title}}</p>
+      </div>
+      <div class="card-user">
+        <p><a class="profile-link" href="{% url 'profile' authorid=blog_obj.author_id %}">
+            {{blog_obj.author}}</a></p>
+      </div>
+
+      <div class="card-footer">
+        <p>Posted on
+          {{blog_obj.created_at.date}}</p>
+        <p><a class="article-link" href="{% url 'category' blog_obj.category %}"><img class="small-image"
+              src="{% static 'image/category.png' %}" alt="category" />{{ blog_obj.category }}
+          </a>
+      </div>
+
+      <div class="cover-image">
+        <img src="{{ blog_obj.cover_image.url }}" alt="cover image" srcset="">
+      </div>
+
+      <div class="full-blog-content">
+        <p>{{ blog_obj.content|safe }}</p>
+      </div>
+
+      <hr>
+
+      <div class="commentbox-app">
+        <p class="heading">commentbox</p>
+        <div class="clearfix">
+          <form id="comment-form">
+            <textarea type="text" id="comment-input" class="comment-input" placeholder="Thoughts"></textarea>
+            <input type="submit" value="Post" class="comment-btn">
+          </form>
+        </div>
+
+        <ul id="comment-stream" class="comment-stream">
+          {% for comment in blog_obj.comments.all %}
+          <p>{{ comment.content }}</p>
+          <p>By: {{ comment.author }}</p>
+          <p>Created at: {{ comment.created_at }}</p>
+          <hr>
+          {% empty %}
+          <p>No comments yet.</p>
+          {% endfor %}
+
+        </ul>
+      </div>
     </div>
-    
-    <div class="cover-image">
-      <img src="{{ blog_obj.cover_image.url }}" alt="cover image" srcset="">
-    </div>
-    
-    <div class="full-blog-content">{{ blog_obj.content|safe }}</div>
   </div>
 
 </div>
+{% include 'right_grid.html' %}
 {% endblock %}

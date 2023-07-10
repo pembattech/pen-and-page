@@ -1,10 +1,66 @@
 {% extends "base.html" %}
-
+{% block title %}{% endblock %}
 {% block content %}
 
 <style>
     .mid-grid .entry-container {
         padding: 8px 25px;
+        background-color: white;
+    }
+
+    .input-file-container {
+        position: relative;
+        width: 225px;
+    }
+
+    .input-file-trigger {
+        display: block;
+        padding: 10px 5px;
+        border: 2px solid var(--grey-color);
+        border-radius: 5px;
+        color: var(--main-color);
+        font-size: 1em;
+        text-align: center;
+        transition: all .4s;
+        cursor: pointer;
+    }
+
+    .input-file {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 225px;
+        opacity: 0;
+        padding: 14px 0;
+        cursor: pointer;
+    }
+
+    .input-file:hover+.input-file-trigger,
+    .input-file:focus+.input-file-trigger,
+    .input-file-trigger:hover,
+    .input-file-trigger:focus {
+        border: 2px solid var(--grey-color);
+        border-radius: 5px;
+    }
+
+    .file-return {
+        margin: 0;
+    }
+
+    .file-return:not(:empty) {
+        margin: 1em 0;
+    }
+
+    .file-return {
+        font-style: italic;
+        font-size: .9em;
+        font-weight: bold;
+    }
+
+    .file-return:not(:empty):before {
+        content: "Selected file: ";
+        font-style: normal;
+        font-weight: normal;
     }
 
     .entry-container-form label {
@@ -100,121 +156,6 @@
         left: 20px;
         opacity: 0;
         transition: all 0.2s ease-in-out;
-    }
-
-    .file-upload {
-        display: block;
-        text-align: center;
-        margin-top: 8px;
-        width: 96.5%;
-    }
-
-    .file-upload .file-select {
-        display: block;
-        border: 2px solid #D3D3D3;
-        border-radius: 5px;
-        color: #34495e;
-        cursor: pointer;
-        height: 40px;
-        line-height: 40px;
-        text-align: left;
-        background: #FFFFFF;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .file-upload .file-select .file-select-button {
-        background: #D3D3D3;
-        padding: 0 10px;
-        display: inline-block;
-        height: 40px;
-        line-height: 40px;
-    }
-
-    .file-upload .file-select .file-select-name {
-        line-height: 40px;
-        display: inline-block;
-        padding: 0 10px;
-    }
-
-    .file-upload .file-select:hover {
-        border-color: #34495e;
-        transition: all .2s ease-in-out;
-        -moz-transition: all .2s ease-in-out;
-        -webkit-transition: all .2s ease-in-out;
-        -o-transition: all .2s ease-in-out;
-    }
-
-    .file-upload .file-select:hover .file-select-button {
-        background: #34495e;
-        color: #FFFFFF;
-        transition: all .2s ease-in-out;
-        -moz-transition: all .2s ease-in-out;
-        -webkit-transition: all .2s ease-in-out;
-        -o-transition: all .2s ease-in-out;
-    }
-
-    .file-upload.active .file-select {
-        border-color: #3fa46a;
-        transition: all .2s ease-in-out;
-        -moz-transition: all .2s ease-in-out;
-        -webkit-transition: all .2s ease-in-out;
-        -o-transition: all .2s ease-in-out;
-    }
-
-    .file-upload.active .file-select .file-select-button {
-        background: #3fa46a;
-        color: #FFFFFF;
-        transition: all .2s ease-in-out;
-        -moz-transition: all .2s ease-in-out;
-        -webkit-transition: all .2s ease-in-out;
-        -o-transition: all .2s ease-in-out;
-    }
-
-    .file-upload .file-select input[type=file] {
-        z-index: 100;
-        cursor: pointer;
-        position: absolute;
-        height: 100%;
-        width: 90%;
-        top: 0;
-        left: 0;
-        opacity: 0;
-        filter: alpha(opacity=0);
-    }
-
-    .file-upload .file-select.file-select-disabled {
-        opacity: 0.65;
-    }
-
-    .file-upload .file-select.file-select-disabled:hover {
-        cursor: default;
-        display: block;
-        border: 2px solid #D3D3D3;
-        color: #34495e;
-        cursor: pointer;
-        height: 40px;
-        line-height: 40px;
-        margin-top: 5px;
-        text-align: left;
-        background: #FFFFFF;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .file-upload .file-select.file-select-disabled:hover .file-select-button {
-        background: #D3D3D3;
-        color: #666666;
-        padding: 0 10px;
-        display: inline-block;
-        height: 40px;
-        line-height: 40px;
-    }
-
-    .file-upload .file-select.file-select-disabled:hover .file-select-name {
-        line-height: 40px;
-        display: inline-block;
-        padding: 0 10px;
     }
 
     .select {
@@ -358,6 +299,18 @@
             transform: rotate(-90deg) translate(0, -5px) scale(var(--progress-scale));
         }
     }
+
+    .blogform-title {
+        font-size: 50px;
+        font-weight: 600;
+        color: rgb(41, 41, 41);
+    }
+
+    .blogform-title::placeholder {
+        font-size: 50px;
+        font-weight: 600;
+        color: rgb(41, 41, 41);
+    }
 </style>
 
 <div class="mid-grid">
@@ -365,42 +318,22 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="entry-container-form">
-                <label>
-                    {{ form.title }}
-                    <span id="{{ form.title.id_for_label }}">Title</span>
-                </label>
 
-                <label>
-                    {{ form.short_description }}
-                    <span id="{{ form.short_description.id_for_label }}">Short Description</span>
-                </label>
-
-                <label>
-                    {{ form.content }}
-                    <span id="{{ form.content.id_for_label }}">Content</span>
-                </label>
-
-            </div>
-
-            <label class="select" for="slct">
-                <select id="slct" name="category" required="required">
-                    <option value="" disabled="disabled" selected="selected">Select category</option>
-                    {% for choice in category_choices %}
-                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
-                    {% endfor %}
-                </select>
-                <svg>
-                    <use xlink:href="#select-arrow-down"></use>
-                </svg>
-            </label>
-
-            <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-            <div class="file-upload">
-                <div class="file-select">
-                    <div class="file-select-button" id="fileName">Choose File</div>
-                    <div class="file-select-name" id="noFile">No file chosen...</div>
-                    <input type="file" name="chooseFile" id="chooseFile">
+                <div class="input-file-container">
+                    <input class="blogform-fileupload input-file" name="cover_image" id="my-file" type="file">
+                    <label tabindex="0" for="my-file" class="input-file-trigger">Add a cover image</label>
+                    <p class="file-return"></p>
                 </div>
+
+                {{ form.media}}
+                {% for field in form %}
+                <div class="form-list">
+
+                    {{ field }}
+
+                </div>
+                {% endfor %}
+
             </div>
 
             <button class="button-hold" type="submit">Publish</button>
@@ -410,16 +343,21 @@
 </div>
 
 <script>
-    $('#chooseFile').bind('change', function () {
-        var filename = $("#chooseFile").val();
-        if (/^\s*$/.test(filename)) {
-            $(".file-upload").removeClass('active');
-            $("#noFile").text("No file chosen...");
+    var fileInput = document.querySelector(".input-file"),
+        button = document.querySelector(".input-file-trigger"),
+        the_return = document.querySelector(".file-return");
+
+    button.addEventListener("keydown", function (event) {
+        if (event.keyCode == 13 || event.keyCode == 32) {
+            fileInput.focus();
         }
-        else {
-            $(".file-upload").addClass('active');
-            $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
-        }
+    });
+    button.addEventListener("click", function (event) {
+        fileInput.focus();
+        return false;
+    });
+    fileInput.addEventListener("change", function (event) {
+        the_return.innerHTML = this.files[0].name;
     });
 </script>
 
