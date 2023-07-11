@@ -1,70 +1,42 @@
-
 {% extends "base.html" %} {% block content %}
 {% load static %}
 
 <style>
-  .commentbox-app {
+  .commentbox {
     font-family: inherit;
     color: #4a4a4a;
     font-size: 14px;
   }
 
-  .commentbox-app .comment-input,
-  .commentbox-app .comment-btn {
+  .commentbox .comment-input,
+  .commentbox .comment-btn {
     display: inline-block;
-    height: 70px;
-    border: 0;
     border-radius: 5px;
   }
 
-  .commentbox-app .comment-input {
+  .commentbox .comment-input {
+    width: 550px;
+    height: 50px;
     appearance: none;
-    border: 0;
-    border-left: 3px solid transparent;
-    background-color: #EEE;
-    padding: 10px 10px 10px 32px;
-    transition: 0.65s ease;
+    outline: 0;
+    border: 1px solid var(--grey-color);
+    padding: 10px;
   }
 
-  .commentbox-app .comment-input:focus {
-    border-color: orange;
+  .commentbox .comment-input:focus {
+    height: 100px;
+    border: 2px solid var(--sidebar-hover-color);
     background-color: #fff;
+
   }
 
-  .commentbox-app .comment-btn {
-    appearance: none;
-    background-color: #fff;
-    font-size: 18px;
-    text-decoration: none;
-    color: orange;
-    padding: 10px 32px;
-    line-height: 1.5;
-    transition: 0.65s ease;
-  }
-
-  .commentbox-app .comment-btn,
-  .commentbox-app .comment-btn:focus,
-  .commentbox-app .comment-btn:active {
-    border: 0;
-  }
-
-  .commentbox-app .comment-btn:hover {
-    background-color: orange;
-    color: #fff;
-  }
-
-  .commentbox-app .comment-btn:hover+.comment-input {
-    background-color: #fff;
-    border-color: orange;
-  }
-
-  .commentbox-app .comment-stream {
+  .commentbox .comment-stream {
     list-style: none;
     padding: 0;
     margin: 0;
   }
 
-  .commentbox-app .comment-stream .comment-remove {
+  .commentbox .comment-stream .comment-remove {
     display: none;
     background-color: red;
     color: #fff;
@@ -76,19 +48,24 @@
     cursor: pointer;
   }
 
-  .commentbox-app .comment-stream .comment-remove:hover {
+  .commentbox .comment-stream .comment-remove:hover {
     opacity: 1;
   }
 
-  .commentbox-app .comment-stream li {
+  .commentbox .comment-stream li {
     font-size: 14px;
     padding-left: 10px;
     border-left: 3px solid #4a4a4a;
     margin-bottom: 25px;
   }
 
-  .commentbox-app .comment-stream li:hover .comment-remove {
+  .commentbox .comment-stream li:hover .comment-remove {
     display: inline-block;
+  }
+
+  .comment-author-date p {
+    color: var(--main-color);
+    margin-bottom: 10px;
   }
 </style>
 <div class="mid-grid">
@@ -99,8 +76,7 @@
         <p>{{blog_obj.title}}</p>
       </div>
       <div class="card-user">
-        <p><a class="profile-link" href="{% url 'profile' authorid=blog_obj.author_id %}">
-            {{blog_obj.author}}</a></p>
+        <p><a class="profile-link" href="{% url 'profile' authorid=blog_obj.author_id %}">{{ blog_obj.author }}</a></p>
       </div>
 
       <div class="card-footer">
@@ -121,20 +97,40 @@
 
       <hr>
 
-      <div class="commentbox-app">
-        <p class="heading">commentbox</p>
+      <div class="commentbox">
+        <p class="heading">Comment ({{ comment_count }})</p>
         <div class="clearfix">
-          <form id="comment-form">
-            <textarea type="text" id="comment-input" class="comment-input" placeholder="Thoughts"></textarea>
-            <input type="submit" value="Post" class="comment-btn">
+          {% if user.is_authenticated %}
+          <form method="post" id="comment-form">
+            {% csrf_token %}
+            {{ comment_form.media }}
+            {% for field in comment_form %}
+            <div class="form-list">
+
+              {{ field }}
+
+            </div>
+            {% endfor %}
+            <button class="button-hold" type="submit">Submit</button>
+
           </form>
+          {% else %}
+          <a href="/login">
+            <p>Login first to comment.</p>
+          </a>
+          {% endif %}
         </div>
+
+        <hr>
 
         <ul id="comment-stream" class="comment-stream">
           {% for comment in blog_obj.comments.all %}
-          <p>{{ comment.content }}</p>
-          <p>By: {{ comment.author }}</p>
-          <p>Created at: {{ comment.created_at }}</p>
+
+          <div class="comment-author-date">
+            <p>{{ comment.author }} • {{ comment.created_at.date }}</p>
+          </div>
+
+          <p class="comment-content">{{ comment.comment_content }}</p>
           <hr>
           {% empty %}
           <p>No comments yet.</p>
@@ -144,7 +140,6 @@
       </div>
     </div>
   </div>
-
 </div>
 {% include 'right_grid.html' %}
 {% endblock %}

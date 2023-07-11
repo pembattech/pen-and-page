@@ -1,9 +1,9 @@
+from .models import Blog, Comment
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 
 from .form import *
 from .models import CATEGORY_CHOICES
-
 
 def home(request):
     categories = Blog.objects.values_list('category', flat=True).distinct()
@@ -63,14 +63,34 @@ def logout_view(request):
 
 
 def blog_detail(request, slug):
-    context = {}
     try:
         blog_obj = Blog.objects.filter(slug=slug).first()
         categories = Blog.objects.values_list('category', flat=True).distinct()
-        context["categories"] = categories
-        context['blog_obj'] = blog_obj
+
+        if request.method == "POST":
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment_obj = comment_form.save(commit=False)
+                comment_obj.author = request.user
+                comment_obj.blog = blog_obj
+                comment_obj.save()
+                return redirect("blog_detail", slug=blog_obj.slug)
+        else:
+            comment_form = CommentForm()
+
+        comment_count = Comment.objects.filter(blog=blog_obj).count()
+        context = {
+            "categories": categories,
+            "blog_obj": blog_obj,
+            "comment_form": comment_form,
+            "comment_count": comment_count,
+        }
+
     except Exception as e:
         print(e)
+        context = {}
+
+
     return render(request, 'blog_detail.html', context)
 
 

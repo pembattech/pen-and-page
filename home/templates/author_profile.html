@@ -1,11 +1,9 @@
-
 {% extends 'base.html' %}
 
 {% block content %}
 
 {% load static %}
 <style>
-
     p.author-title {
         font-size: 30px;
     }
@@ -72,8 +70,6 @@
 
 <div class="mid-grid">
     <div class="author-profile-container">
-
-        {% if blog_obj %}
         <div class="author-blog-item">
             <p class="heading">Posts</p>
 
@@ -100,15 +96,11 @@
                 </div>
                 <!-- <div class="horizontal-line"></div> -->
             </div>
+
+            {% empty %}
+            <p>No post yet.</p>
             {% endfor %}
         </div>
-
-        {% else %}
-        <p class="author-title">{{ logged_user }}</p>
-        <p>No post</p>
-        {% endif %}
-
     </div>
-
 </div>
 {% endblock %}
