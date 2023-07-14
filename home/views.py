@@ -5,6 +5,7 @@ from django.contrib.auth import logout
 from .form import *
 from .models import CATEGORY_CHOICES
 
+
 def home(request):
     categories = Blog.objects.values_list('category', flat=True).distinct()
     context = {"categories": categories, "blogs": Blog.objects.all()}
@@ -34,7 +35,7 @@ def add_blog(request):
                         author=user, title=title, content=content, category=category, cover_image=image
                     )
                     print(blog_obj)
-                return redirect('/addblog/')
+                return redirect('/new/')
         except Exception as e:
             print(e)
 
@@ -46,6 +47,12 @@ def add_blog(request):
 def login_view(request):
     if request.user.is_authenticated:
         return redirect("/")
+    
+    # if 'next' in request.POST:
+    #     print("Hello1")
+    
+    #     return redirect(request.POST['next'])
+    
     return render(request, 'login.html')
 
 
@@ -89,7 +96,6 @@ def blog_detail(request, slug):
     except Exception as e:
         print(e)
         context = {}
-
 
     return render(request, 'blog_detail.html', context)
 

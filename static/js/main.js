@@ -57,6 +57,7 @@ function LoginForm_validation() {
             }).then(response => {
                 if (response.status == 200) {
                     window.location.href = "/";
+                    return response;
                 } else {
                     const msg = response.message;
                     const search_invalidpass = "invalid password"

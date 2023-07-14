@@ -115,9 +115,7 @@
 
           </form>
           {% else %}
-          <a href="/login">
-            <p>Login first to comment.</p>
-          </a>
+          <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
           {% endif %}
         </div>
 
