@@ -17,3 +17,5 @@ static/ckeditor/
 
 modeltest.py
 *test*.*
+
+db.sqlite3
