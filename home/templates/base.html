@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -6,21 +5,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{% block title %}{% endblock %}</title>
+  <title>{% block title %}{% endblock %} - Pen and Page</title>
   <link rel="stylesheet" type="text/css" href=" {% static 'css/style.css' %} " />
+  <link rel="icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
+  <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
+
   <script src="{% static 'js/main.js'%}"></script>
   <script type="text/javascript" src="{% static ' ckeditor/ckeditor-init.js' %}"></script>
   <script type="text/javascript" src="{% static ' ckeditor/ckeditor/ckeditor.js' %}"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
-  <style>
-    hr {
-      margin: 5px 0;
-      color: var(--grey-color);
-      opacity: 0.2;
-    }
-  </style>
+  
 </head>
 
 <body>
@@ -37,81 +33,93 @@
               </div>
             </a>
             <ul>
-              <li>
-                <a href="{% url 'home' %}">
+              <a href="{% url 'home' %}">
+                <li>
                   <div class="inline-block">
                     <img src="{% static 'image/home.svg' %}" alt="" class="image-icon">
                   </div>
                   <div class="inline-block">
                     Home
                   </div>
-                </a>
-              </li>
+                </li>
+              </a>
 
 
               {% if user.is_authenticated %}
-              <li>
-                <div class="inline-block">
-                  <img src="{% static 'image/pencil-case.svg' %}" alt="" class="image-icon">
-                </div>
-                <div class="inline-block">
-                  <a href="{% url 'addblog' %}">Write a blog</a>
-                </div>
-              </li>
-
-              <li>
-                <div class="inline-block">
-                  <img src="{% static 'image/dashboard.svg' %}" alt="" class="image-icon">
-                </div>
-                <div class="inline-block">
-                  <a class="profile-link" href="{% url 'profile' authorid=user.id %}">Dashboard</a>
-                </div>
-              </li>
-              <hr>
-              <li>
-                <div class="inline-block">
-                  <img src="{% static 'image/user-profile.svg' %}" alt="" class="image-icon">
-                </div>
-                <div class="inline-block">
-                  <a class="logout-link" href="{% url 'profile' authorid=user.id %}">{{ user.username }}</a>
-                </div>
-              </li>
-              <li>
-                <div class="inline-block">
-                  <img src="{% static 'image/home.svg' %}" alt="" class="image-icon">
-                </div>
-                <div class="inline-block">
-                  <a class="logout-link" href="{% url 'logout' %}">Logout</a>
-                </div>
-              </li>
-              {% else %}
-              <li>
-                <a href="{% url 'login' %}">
+              <a href="{% url 'addblog' %}">
+                <li>
                   <div class="inline-block">
                     <img src="{% static 'image/pencil-case.svg' %}" alt="" class="image-icon">
                   </div>
                   <div class="inline-block">
                     Write a blog
                   </div>
-                </a>
-              </li>
+                </li>
+              </a>
 
-              <li>
-                <div class="inline-block">
-                  <img src="{% static 'image/home.svg' %}" alt="" class="image-icon">
-                </div>
-                <div class="inline-block">
-                  <a href="{% url 'login' %}">Sign in</a>
-                </div>
-              </li>
-              <li>
-                <div class="inline-block">
-                  <img src="{% static 'image/home.svg' %}" alt="" class="image-icon">
-                </div>
-                <div class="inline-block">
-                  <a href="{% url 'register' %}">Get Started</a>
-                </div>
-              </li>
+              <a class="profile-link" href="{% url 'dashboard' authorid=user.id %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/dashboard.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    Dashboard
+                  </div>
+                </li>
+              </a>
+              <hr>
+              <a class="logout-link" href="{% url 'profile' authorid=user.id %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/user-profile.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    {{ user.username }}
+                  </div>
+                </li>
+              </a>
+              <a class="logout-link" href="{% url 'logout' %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/user-logout.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    Logout
+                  </div>
+                </li>
+              </a>
+              {% else %}
+              <a href="{% url 'login' %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/pencil-case.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    Write a blog
+                  </div>
+                </li>
+              </a>
+
+              <a href="{% url 'login' %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/user-login.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    Sign in
+                  </div>
+                </li>
+              </a>
+              <a href="{% url 'register' %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/user-signup.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    Get Started
+                  </div>
+                </li>
+              </a>
               {% endif %}
             </ul>
           </div>

@@ -135,6 +135,27 @@ def author_profile(request, authorid):
         print(e)
     return render(request, 'author_profile.html', context)
 
+def dashboard(request, authorid):
+    context = {}
+    try:
+        blog_obj = Blog.objects.filter(author_id=authorid)
+        print(blog_obj)
+        try:
+            author = blog_obj.first().author
+            print("*")
+            print(blog_obj)
+            print(author)
+            print("*")
+            context['blog_author'] = author
+        except Exception as e:
+            pass
+        context['blog_obj'] = blog_obj
+        context['logged_user'] = request.user
+        print(context)
+
+    except Exception as e:
+        print(e)
+    return render(request, 'dashboard.html', context)
 
 def delete_blog(request, id):
     try:

@@ -13,7 +13,8 @@ CATEGORY_CHOICES = (
     ("Travel", "Travel"),
     ("Fashion", "Fashion"),
     ("Food", "Food"),
-    ("Finance", "Finance")
+    ("Finance", "Finance"),
+    ("Other", "Other")
 )
 
 

@@ -10,6 +10,7 @@ urlpatterns = [
     path("blog/<slug>", blog_detail, name = "blog_detail" ),
     path("category/<category>", blog_category, name = "category" ),
     path("profile/<int:authorid>/", author_profile, name="profile"),
+    path("dashboard/<int:authorid>/", dashboard, name="dashboard"),
     path("delete_blog/<id>", delete_blog, name = "delete_blog"),
     path("edit_blog/<slug>", edit_blog, name = "edit_blog"),
 ]

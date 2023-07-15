@@ -1,73 +1,8 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block title %}Blog{% endblock %}
+{% block content %}
 {% load static %}
 
-<style>
-  .commentbox {
-    font-family: inherit;
-    color: #4a4a4a;
-    font-size: 14px;
-  }
-
-  .commentbox .comment-input,
-  .commentbox .comment-btn {
-    display: inline-block;
-    border-radius: 5px;
-  }
-
-  .commentbox .comment-input {
-    width: 550px;
-    height: 50px;
-    appearance: none;
-    outline: 0;
-    border: 1px solid var(--grey-color);
-    padding: 10px;
-  }
-
-  .commentbox .comment-input:focus {
-    height: 100px;
-    border: 2px solid var(--sidebar-hover-color);
-    background-color: #fff;
-
-  }
-
-  .commentbox .comment-stream {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .commentbox .comment-stream .comment-remove {
-    display: none;
-    background-color: red;
-    color: #fff;
-    font-size: 20px;
-    text-decoration: none;
-    margin-left: 12px;
-    padding: 0 12px;
-    opacity: 0.75;
-    cursor: pointer;
-  }
-
-  .commentbox .comment-stream .comment-remove:hover {
-    opacity: 1;
-  }
-
-  .commentbox .comment-stream li {
-    font-size: 14px;
-    padding-left: 10px;
-    border-left: 3px solid #4a4a4a;
-    margin-bottom: 25px;
-  }
-
-  .commentbox .comment-stream li:hover .comment-remove {
-    display: inline-block;
-  }
-
-  .comment-author-date p {
-    color: var(--main-color);
-    margin-bottom: 10px;
-  }
-</style>
 <div class="mid-grid">
   <div class="article-container">
     <div class="article">
