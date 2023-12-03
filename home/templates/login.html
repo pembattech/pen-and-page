@@ -1,0 +1,46 @@
+{% extends 'base.html' %} 
+{% block title %}Login{% endblock %}
+{% block content %}
+{% load static %}
+
+<div class="mid-grid">
+  <div class="form">
+    <div class="form-toggle"></div>
+    <div class="form-panel one">
+      <div class="form-header">
+        <h1>Account Login</h1>
+      </div>
+      <div class="form-content">
+        <form method="post" id="myLoginForm" autocomplete="off">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input id="username" type="text" name="username" />
+            <small>Error message</small>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" />
+            <small>Error message</small>
+          </div>
+          <div class="form-group">
+            <label class="form-remember">
+              <input type="checkbox" />Remember Me
+            </label>
+            <a class="form-recovery" href="#">Forgot Password?</a>
+          </div>
+          <div class="form-group">
+
+            {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}" />
+            {% endif %}
+
+            <button type="submit" onclick="LoginForm_validation()">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

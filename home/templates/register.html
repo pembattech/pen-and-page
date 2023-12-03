@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Sign up{% endblock %}
+{% block content %}
+{% load static %}
+<div class="mid-grid">
+  <div class="form">
+    <div class="form-panel one">
+      <div class="form-header">
+        <h1>Register Account</h1>
+      </div>
+      <div class="form-content">
+        <form method="post" id="myRegistrationForm">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="reg-username">Username</label>
+            <input id="reg-username" type="text" name="reg-username" />
+            <small>Error message</small>
+          </div>
+          <div class="form-group">
+            <label for="reg-password">Password</label>
+            <input id="reg-password" type="password" name="reg-password" />
+            <small>Error message</small>
+          </div>
+          <div class="form-group">
+            <label for="reg-cpassword">Confirm Password</label>
+            <input id="reg-cpassword" type="password" name="reg-cpassword" />
+            <small>Error message</small>
+          </div>
+          <div class="form-group">
+            <label for="reg-email">Email Address</label>
+            <input id="reg-email" type="email" name="reg-email" />
+            <small>Error message</small>
+          </div>
+          <div class="form-group">
+            <button type="submit" onclick="return RegistrationForm_validation()">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,50 @@
+
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+{% load static %}
+
+<div class="mid-grid">
+  <div class="articles-content">
+    {% for blog in blogs %}
+    <div class="article-item">
+
+      <div class="card-horizontal">
+        <a class="article-link" href="{% url 'blog_detail' blog.slug %}">
+        </a>
+        <div class="img-circle-wrapper">
+
+          <div class="article-profilepicture-circle">
+            <img src="{{ blog.cover_image.url }}" alt="cover image" />
+          </div>
+        </div>
+        <div class="card-body">
+          {% if blog.author != None %}
+          <div class="card-user">
+            <p><a class="profile-link" href="{% url 'profile' authorid=blog.author_id %}">{{ blog.author }}
+              </a>
+            </p>
+          </div>
+          {% endif %}
+          <a class="article-link" href="{% url 'blog_detail' blog.slug %}">
+            <div class="card-title">
+              <p>{{ blog.title }}</p>
+            </div>
+            <div class="card-text">
+              <p>{{ blog.content|slice:":200"|safe }}{% if blog.content|length > 200 %}...{% endif %}</p>
+            </div>
+          </a>
+          <div class="card-footer">
+            <p>Posted on {{blog.created_at.date}}</p>
+
+              <p><a class="article-link" href="{% url 'category' blog.category %}"><img class="small-image" src="{% static 'image/category.png' %}" alt="category" />{{ blog.category }}
+              </a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% include 'right_grid.html' %}
+{% endblock %}

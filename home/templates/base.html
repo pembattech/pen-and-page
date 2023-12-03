@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{% endblock %} - Pen and Page</title>
+  <link rel="stylesheet" type="text/css" href=" {% static 'css/style.css' %} " />
+  <link rel="icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
+  <link rel="shortcut icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
+
+  <script src="{% static 'js/main.js'%}"></script>
+  <script type="text/javascript" src="{% static ' ckeditor/ckeditor-init.js' %}"></script>
+  <script type="text/javascript" src="{% static ' ckeditor/ckeditor/ckeditor.js' %}"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
+  
+</head>
+
+<body>
+  <input type="hidden" id="csrf" value="{{csrf_token}}" />
+  <div class="container">
+    <div class="grid-container">
+      <div class="left-grid">
+        <div class="sidebar">
+          <div class="navbar">
+            <a href="/">
+
+              <div class="logo">
+                <img src="{% static 'image/PenandPage_logo.png' %}" alt="Logo" />
+              </div>
+            </a>
+            <ul>
+              <a href="{% url 'home' %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/home.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    Home
+                  </div>
+                </li>
+              </a>
+
+
+              {% if user.is_authenticated %}
+              <a href="{% url 'addblog' %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/pencil-case.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    Write a blog
+                  </div>
+                </li>
+              </a>
+
+              <a class="profile-link" href="{% url 'dashboard' authorid=user.id %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/dashboard.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    Dashboard
+                  </div>
+                </li>
+              </a>
+              <hr>
+              <a class="logout-link" href="{% url 'profile' authorid=user.id %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/user-profile.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    {{ user.username }}
+                  </div>
+                </li>
+              </a>
+              <a class="logout-link" href="{% url 'logout' %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/user-logout.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    Logout
+                  </div>
+                </li>
+              </a>
+              {% else %}
+              <a href="{% url 'login' %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/pencil-case.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    Write a blog
+                  </div>
+                </li>
+              </a>
+
+              <a href="{% url 'login' %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/user-login.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    Sign in
+                  </div>
+                </li>
+              </a>
+              <a href="{% url 'register' %}">
+                <li>
+                  <div class="inline-block">
+                    <img src="{% static 'image/user-signup.svg' %}" alt="" class="image-icon">
+                  </div>
+                  <div class="inline-block">
+                    Get Started
+                  </div>
+                </li>
+              </a>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% block content %} {% endblock %}
+    </div>
+  </div>
+
+  <script type="text/javascript" src='{% static " ckeditor/ckeditor-init.js" %}'></script>
+  <script type="text/javascript" src='{% static " ckeditor/ckeditor/ckeditor.js" %}'>
+  </script>
+  <link rel="stylesheet" href="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/default.css' %}" />
+  <script src="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+{% load static %}
+{% block content %}
+
+<style>
+  .search-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 20px;
+  }
+
+  .search-input form {
+    position: relative;
+    width: 30rem;
+    background: #57bd84;
+  }
+
+  .search-input input,
+  .search-input button {
+    height: 3rem;
+    border: 0;
+    font-size: 16px;
+  }
+
+  .search-input input[type=search] {
+    outline: 0;
+    width: 100%;
+    background: var(--white-bgcolor);
+    padding: 0 1.6rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition: all .3s cubic-bezier(0, 0, 0.43, 1.49);
+    z-index: 1;
+    position: relative;
+  }
+
+  .search-input button {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 6rem;
+    font-weight: bold;
+    background: #57bd84;
+  }
+
+  .search-input input:not(:-moz-placeholder-shown) {
+    width: calc(100% - 6rem);
+  }
+
+  .search-input input:not(:-ms-input-placeholder) {
+    width: calc(100% - 6rem);
+  }
+
+  .search-input input:not(:placeholder-shown) {
+    width: calc(100% - 6rem);
+  }
+
+  .search-input input:not(:-moz-placeholder-shown)+button {
+    display: block;
+  }
+
+  .search-input input:not(:-ms-input-placeholder)+button {
+    display: block;
+  }
+
+  .search-input input:not(:placeholder-shown)+button {
+    display: block;
+  }
+
+  .search-input label {
+    position: absolute;
+    clip: rect(0.5px, 0.5px, 0.5px, 0.5px);
+    padding: 0;
+    border: 0;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+  }
+
+  li.cat-item {
+    padding: var(--main-padding);
+  }
+</style>
+
+
+<div class="right-grid">
+  <div class="search-input">
+    <form onsubmit="event.preventDefault();" role="search">
+      <label for="search">Search for stuff</label>
+      <input id="search" type="search" placeholder="Search..." autofocus required />
+      <button type="submit">Go</button>
+    </form>
+  </div>
+
+  <div class="right-container">
+    <div class="categories-content">
+      <div class="cat-list">
+        <ul>
+          <li class="heading">Categories</li>
+        </ul>
+        <hr>
+        <ul>
+          {% for category in categories %}
+          <a href="{% url 'category' category=category %}">
+            <li class="cat-item">
+              {{ category }}
+            </li>
+          </a>
+          <hr>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <footer class="left-footer" id="footer"></footer>
+  </div>
+</div>
+
+{% endblock %}

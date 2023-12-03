@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+
+{% load static %}
+<style>
+    p.author-title {
+        font-size: 30px;
+    }
+
+    .about-author {
+        background: red;
+    }
+
+    .card-title {
+        font-size: 16px;
+    }
+
+    .article-item {
+        margin-bottom: 10px;
+    }
+
+    .author-blog-item .heading {
+        font-size: 20px;
+    }
+
+    .posts-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: var(--main-padding);
+    }
+
+    .posts-grid:hover {
+        background-color: var(--sidebar-hover-bgcolor);
+    }
+
+    .posts-grid .card-title {
+        grid-column: 1;
+    }
+
+    .posts-grid .card-title .card-footer {
+        font-weight: 400;
+    }
+
+    .posts-grid .option {
+        grid-column-start: 2;
+        grid-column-end: span 1;
+        justify-self: end;
+        display: inline;
+    }
+
+    .posts-grid .option p {
+        display: inline;
+        padding: 10px;
+        font-size: 14px;
+        color: var(--grey-color);
+    }
+
+    .posts-grid .option p:hover {
+        background-color: var(--sidebar-hover-bgcolor);
+        border: 0;
+        border-radius: 5px;
+        color: #000;
+    }
+
+    .posts-grid .option p:hover a {
+        color: black;
+    }
+
+    p.article-link {
+        display: inline;
+        margin: 0;
+    }
+</style>
+
+<div class="mid-grid">
+    <div class="author-profile-container">
+        <div class="author-blog-item">
+            <p class="heading">Posts</p>
+
+            {% for blog in blog_obj %}
+
+            <div class="article-item">
+                <div class="posts-grid">
+
+                    <div class="card-title">
+                        <a class="article-link" href="{% url 'blog_detail' blog.slug %}">
+                            <p class="article-link">{{ blog.title }}</p>
+                        </a>
+                        <div class="card-footer">
+                            <p>Published: {{blog.created_at.date}}</p>
+                        </div>
+                    </div>
+
+                    {% if logged_user == blog.author %}
+                    <div class="option">
+                        <p><a href="{% url 'edit_blog' slug=blog.slug %}">Edit</a></p>
+                        <p><a href="{% url 'delete_blog' id=blog.id %}">Delete</a></p>
+                    </div>
+                    {% endif %}
+                </div>
+                <!-- <div class="horizontal-line"></div> -->
+            </div>
+
+            {% empty %}
+            <p>No post yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
