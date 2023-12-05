@@ -1,3 +1,4 @@
 venv/
 TODO
 .env
+__pycache__
