@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+
+{% load static %}
+
+
+<style>
+    .mid-grid .profile-container {
+        border-radius: 10px;
+        padding: 8px 25px;
+        background: white;
+    }
+
+    .profilebox {
+        position: relative;
+        width: calc(60% - 120px);
+        border-radius: 8px;
+        padding: 50px 20px 20px 100px;
+    }
+
+    .profpic {
+        position: absolute;
+        left: 80%;
+        width: 8rem;
+        height: 8rem;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: -3rem;
+        border: 10px solid black;
+        z-index: 2;
+        box-shadow: 0 1rem 1.5rem -1rem rgba(0, 45, 64, 0.2), 0 0 0.5rem 0 rgba(0, 45, 64, 0.2), 0 0rem 4rem 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .prof-name {
+        text-align: center;
+        color: var(--main-color);
+        font-weight: normal;
+        font-size: 20pt;
+        margin-top: 32px;
+        margin-right: -156px;
+    }
+
+    .prof-user {
+        display: block;
+        color: var(--main-color);
+        font-weight: normal;
+        font-size: 11pt;
+        text-align: center;
+        margin-right: -156px;
+    }
+
+    .blackbg {
+        background: black;
+        height: 80px;
+        width: 720px;
+        margin: -7px -25px;
+        border-radius: 10px;
+    }
+</style>
+
+<div class="mid-grid">
+    <div class="profile-container">
+        <div class="blackbg"></div>
+
+        <div class="profilebox">
+            <img class="profpic"
+                src="{% static 'image/dummy_user.png' %}"
+                alt="profile picture" />
+            
+            <h1 class="prof-name">@{{ blog_author }}</h1>
+        </div>
+        <hr>
+
+        <div class="author-blog-item">
+            <p class="heading">Posts</p>
+
+            {% for blog in blog_obj %}
+
+            <div class="article-item">
+                <div class="posts-grid">
+
+                    <div class="card-title">
+                        <a class="article-link" href="{% url 'blog_detail' blog.slug %}">
+                            <p class="article-link">{{ blog.title }}</p>
+                        </a>
+                        <div class="card-footer">
+                            <p>Published: {{blog.created_at.date}}</p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+
+            {% empty %}
+            <p>No post yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
