@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Blog{% endblock %}
+{% block content %}
+{% load static %}
+
+<div class="mid-grid">
+  <div class="article-container">
+    <div class="article">
+
+      <div class="blog-title">
+        <p>{{blog_obj.title}}</p>
+      </div>
+      <div class="card-user">
+        <p><a class="profile-link" href="{% url 'profile' authorid=blog_obj.author_id %}">{{ blog_obj.author }}</a></p>
+      </div>
+
+      <div class="card-footer">
+        <p>Posted on
+          {{blog_obj.created_at.date}}</p>
+        <p><a class="article-link" href="{% url 'category' blog_obj.category %}"><img class="small-image"
+              src="{% static 'image/category.png' %}" alt="category" />{{ blog_obj.category }}
+          </a>
+      </div>
+
+      <div class="cover-image">
+        <img src="{{ blog_obj.cover_image.url }}" alt="cover image" srcset="">
+      </div>
+
+      <div class="full-blog-content">
+        <p>{{ blog_obj.content|safe }}</p>
+      </div>
+
+      <hr>
+
+      <div class="commentbox">
+        <p class="heading">Comment ({{ comment_count }})</p>
+        <div class="clearfix">
+          {% if user.is_authenticated %}
+          <form method="post" id="comment-form">
+            {% csrf_token %}
+            {{ comment_form.media }}
+            {% for field in comment_form %}
+            <div class="form-list">
+
+              {{ field }}
+
+            </div>
+            {% endfor %}
+            <button class="button-hold" type="submit">Submit</button>
+
+          </form>
+          {% else %}
+          <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
+          {% endif %}
+        </div>
+
+        <hr>
+
+        <ul id="comment-stream" class="comment-stream">
+          {% for comment in blog_obj.comments.all %}
+
+          <div class="comment-author-date">
+            <p>{{ comment.author }} • {{ comment.created_at.date }}</p>
+          </div>
+
+          <p class="comment-content">{{ comment.comment_content }}</p>
+          <hr>
+          {% empty %}
+          <p>No comments yet.</p>
+          {% endfor %}
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'right_grid.html' %}
+{% endblock %}
