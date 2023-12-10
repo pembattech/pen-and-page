@@ -5,6 +5,8 @@ from django.contrib.auth import logout
 from .form import *
 from .models import CATEGORY_CHOICES
 
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
 
 def home(request):
     categories = Blog.objects.values_list('category', flat=True).distinct()

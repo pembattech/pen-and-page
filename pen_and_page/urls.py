@@ -22,6 +22,8 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+handler404 = 'home.views.custom_404'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("home.urls")),
