@@ -1,5 +1,5 @@
 from .models import Blog, Comment
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 
 from .form import *
@@ -172,35 +172,15 @@ def delete_blog(request, id):
 
 
 def edit_blog(request, slug):
-    context = {}
-    try:
-        blog_obj = Blog.objects.filter(slug=slug)
-        if blog_obj.author != request.user:
-            return redirect("/")
+    blog_obj = get_object_or_404(Blog, slug=slug)
+    print(blog_obj)
 
-        initial_dict = {"content": blog_obj.content}
-        form = Blog(initial=initial_dict)
-        if request.method == "POST":
-            form = BlogForm(request.POST)
-            image = request.FILES.get('chooseFile', '')
-            title = request.POST.get('title')
-            user = request.user
-            category = request.POST.get('category')
+    if request.method == 'POST':
+        blog_form = BlogForm(request.POST, request.FILES, instance=blog_obj)
+        if blog_form.is_valid():
+            blog_form.save()
 
-            if form.is_valid():
-                print("test2")
-                content = form.cleaned_data['content']
+    else:
+        blog_form = BlogForm(instance=blog_obj)
 
-                blog_obj = Blog.objects.create(
-                    author=user, title=title,
-                    content=content, category=category, image=image
-                )
-                print(blog_obj)
-
-                context['blog_obj'] = blog_obj
-                context['form'] = form
-
-    except Exception as e:
-        print(e)
-
-    return render(request, "edit_blog.html")
+    return render(request, "edit_blog.html", {'blog_form': blog_form})

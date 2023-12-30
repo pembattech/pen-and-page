@@ -360,43 +360,31 @@
         }
     }
 </style>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 
 <div class="mid-grid">
     <div class="entry-container">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+
+            
             <div class="entry-container-form">
-                <label>
-                    {{ form.title }}
-                    <span id="{{ form.title.id_for_label }}">Title</span>
-                </label>
 
-                <label>
-                    {{ form.content }}
-                    <span id="{{ form.content.id_for_label }}">Content</span>
-                </label>
-
-            </div>
-
-            <label class="select" for="slct">
-                <select id="slct" name="category" required="required">
-                    <option value="" disabled="disabled" selected="selected">Select category</option>
-                    {% for choice in category_choices %}
-                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
-                    {% endfor %}
-                </select>
-                <svg>
-                    <use xlink:href="#select-arrow-down"></use>
-                </svg>
-            </label>
-
-            <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-            <div class="file-upload">
-                <div class="file-select">
-                    <div class="file-select-button" id="fileName">Choose File</div>
-                    <div class="file-select-name" id="noFile">No file chosen...</div>
-                    <input type="file" name="chooseFile" id="chooseFile">
+                <div class="input-file-container">
+                    <input class="blogform-fileupload input-file" name="cover_image" id="my-file" type="file">
+                    <label tabindex="0" for="my-file" class="input-file-trigger">Add a cover image</label>
+                    <p class="file-return"></p>
                 </div>
+
+                {{ blog_form.media}}
+                {% for field in blog_form %}
+                <div class="form-list">
+
+                    {{ field }}
+
+                </div>
+                {% endfor %}
+
             </div>
 
             <button class="button-hold" type="submit">Publish</button>
