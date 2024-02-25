@@ -81,11 +81,11 @@ WSGI_APPLICATION = 'pen_and_page.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('ENGINE'),
-        'NAME': os.getenv('db_NAME'),
-        'USER': os.getenv('db_USER'),
-        'PASSWORD': os.getenv('db_PASSWORD'),
-        'HOST': os.getenv('db_HOST'),
-        'PORT': os.getenv('db_PORT'),
+        'NAME': os.getenv('NAME'),
+        'USER': os.getenv('USER'),
+        'PASSWORD': os.getenv('PASSWORD'),
+        'HOST': os.getenv('HOST'),
+        'PORT': os.getenv('PORT'),
     }
 }
 
